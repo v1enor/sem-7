@@ -1,0 +1,31 @@
+﻿@model pis2.Models.Phone
+
+
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => Model.PhoneNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.OwnerName)
+    </td>
+
+    <td width="17%" >
+        <div class="btn-group w-75" role="group">
+            <a href="/TD/Update/@Model.Id" class="btn btn-info mx-1 text-light">
+                <i class="bi bi-pencil-square"></i>
+                &nbsp; Edit
+            </a>
+        </div>
+    </td>
+
+    <td width="25%" class="align-middle">
+        <div class="btn-group w-75" role="group">
+            <form action="/TD/DeleteSave/@Model.Id" method="post">
+                <button class="btn btn-danger mx-1" type="submit">
+                    <i class="bi bi-trash3"></i>
+                    &nbsp; Delete
+                </button>
+            </form>
+        </div>
+    </td>
+</tr>

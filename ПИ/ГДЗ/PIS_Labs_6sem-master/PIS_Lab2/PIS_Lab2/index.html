@@ -1,0 +1,110 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Lab #2</title>
+		<link rel="stylesheet" href="bootstrap.css" />
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    </head>
+    <body> 
+		 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">PIS-2</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            Home
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+	
+	
+	<div class="container mt-4">
+		<div class="mb-3 fs-1">Welcome to Lab #2!</div>
+
+		<div id="wsproperties" class="pb-3 fs-4">
+            WebSockets поддерживается? &nbsp;
+            <span id="support" class="text-info"></span>
+        </div>
+
+		<div class="row-cols-6">
+			<input class="btn btn-success" type="button" value="Start" onclick="exe_start()"/>
+			<input class="btn btn-danger"  type="button" value="Stop" onclick="exe_stop()"/> <br/>
+		</div>
+        
+		<textarea class="mt-4 w-50 p-5 fs-5" id="ta" rows="10" cols="2" readonly></textarea>
+	</div>
+		
+		
+
+        <script>
+            let ws;
+			let ta = document.getElementById('ta');
+
+
+			window.onload = function () {
+				bstart = document.getElementById('bstart');
+				bstop = document.getElementById('bstop');
+
+				if (Modernizr.websockets) {
+					WriteMessage('support', 'Да.');
+				}
+				else {
+					WriteMessage('support', 'Нет.');
+				}
+			}
+
+
+            function exe_start(){
+                ws = new WebSocket("ws://localhost:1459/ws");
+                ws.onopen = function(){ ws.send("Connected"); }
+                ws.onclose = function(){ ta.innerHTML += "Ответ: Connection closed\n"; }
+				ws.onmessage = function(msg){ ta.innerHTML += msg.data + '\n'; }
+            }
+
+
+            async function exe_stop(){
+                await ws.close(3333, 'stopped by me');
+				ws = null;
+            }
+			
+			
+			function WriteMessage(elementIid, message) {
+				let span = document.getElementById(elementIid);
+				span.innerHTML = message;
+			}		
+        </script>
+    </body>
+</html>

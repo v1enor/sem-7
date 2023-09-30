@@ -1,0 +1,65 @@
+﻿@model IEnumerable<PIS_Lab4.Models.PhoneBook>
+@{
+    ViewBag.Title = "PhoneBook List";
+}
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-dark">PhoneBooks List</h2>
+        </div>
+        <div class="col-3 text-end">
+            <a class="btn btn-primary p-2 fs-6" style="width: 240px" href="Dict/Create">
+                <i class="bi bi-plus-circle"></i> 
+                Create PhoneBook
+            </a>
+        </div>
+    </div>
+
+
+    <table class="table mt-4 table-striped" style="width: 80%">
+        <thead class="bg-dark text-light">
+            <tr>
+                <th></th>
+                <th>Id</th>
+                <th>Surname</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="1%"></td>
+                    <td width="5%" class="align-middle">@item.Id</td>
+                    <td width="15%" class="align-middle">@item.Surname</td>
+                    <td width="18%" class="align-middle">@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td width="20%" class="align-middle">@item.PhoneNumber</td>
+                    <td width="15%" class="align-middle">
+                        <div class="btn-group w-75" role="group">
+                            <a href="Dict/Edit/@item.Id" class="btn btn-info mx-1">
+                                <i class="bi bi-pencil-square"></i>
+                                &nbsp; Edit
+                            </a>
+                        </div>
+                    </td>
+                    <td width="15%" class="align-middle">
+                        <div class="btn-group w-75" role="group">
+                            <form action="Dict/Delete/@item.Id" method="post">
+                                <button class="btn btn-danger mx-1" type="submit">
+                                    <i class="bi bi-trash3"></i>
+                                    &nbsp; Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

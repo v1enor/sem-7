@@ -1,0 +1,43 @@
+﻿@model IEnumerable<pis2.Models.Phone>
+@{
+    ViewBag.Title = "View";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-dark">PhoneBooks List</h2>
+        </div>
+        <div class="col-3 text-end">
+            <a class="btn btn-primary p-2 fs-6" style="width: 240px" href="/TD/Add">
+                <i class="bi bi-plus-circle"></i>
+                Create PhoneBook
+            </a>
+        </div>
+    </div>
+
+
+    <table class="table mt-4 table-striped" style="width: 80%">
+        <thead class="bg-dark text-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OwnerName)
+                </th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @Html.Partial("Phone", item)
+            }
+        </tbody>
+
+    </table>
+</div>

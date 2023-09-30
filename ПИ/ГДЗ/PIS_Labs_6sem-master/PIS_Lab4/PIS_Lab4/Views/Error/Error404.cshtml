@@ -1,0 +1,29 @@
+﻿@model PIS_Lab4.Models.Error
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error 404</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+</head>
+<body>
+
+    @{Html.RenderPartial("_Notification");}
+
+    <h3 class="mt-4 text-center">@Model.RequestMethod: @Model.RequestUrl does not exist.</h3>
+
+    <div class="container d-flex" style="margin-left: 17%; width:50%">
+        <img style="cursor: pointer" onclick="redirectToIndexPage()" src="https://cdn.dribbble.com/users/1152726/screenshots/2940106/media/a9dc3a955065937ae8bed3fcfc036a75.gif" />
+    </div>
+
+    <script>
+        function redirectToIndexPage() {
+            window.location.href = "/./";
+        }
+    </script>
+</body>
+</html>

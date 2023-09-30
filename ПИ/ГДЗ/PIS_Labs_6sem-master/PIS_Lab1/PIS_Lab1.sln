@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIS_Lab1", "PIS_Lab1\PIS_Lab1.csproj", "{240AE831-59A7-43AE-8316-E746ED225344}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task4_WindowsClient", "WinFormsApp1\Task4_WindowsClient.csproj", "{0BBE9EA8-2D62-4BE7-8DD3-FEC97D099AD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{240AE831-59A7-43AE-8316-E746ED225344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240AE831-59A7-43AE-8316-E746ED225344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240AE831-59A7-43AE-8316-E746ED225344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240AE831-59A7-43AE-8316-E746ED225344}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBE9EA8-2D62-4BE7-8DD3-FEC97D099AD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBE9EA8-2D62-4BE7-8DD3-FEC97D099AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBE9EA8-2D62-4BE7-8DD3-FEC97D099AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBE9EA8-2D62-4BE7-8DD3-FEC97D099AD8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A8D7F507-5CBB-49F8-A883-85453CD941C4}
+	EndGlobalSection
+EndGlobal

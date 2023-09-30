@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Task 6</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://localhost:44381">PIS-1</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://localhost:44381/1.vad?parmA=AA&parmB=BB&parmC=CC">
+                            Task 1
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://localhost:44381/5.vad">Task 5</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="https://localhost:44381/6.vad">Task 6</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <div class="container mt-5" style="width:25%">
+        <form method="POST" action="https://localhost:44381/6.vad">
+            <h5>Введите два числа:</h5>
+            <input class="form-control" type="number" name="x" required /><br />
+            <input class="form-control" type="number" name="y" required /><br />
+            <button class="btn btn-secondary fs-5 mb-5" type="submit">Умножить</button>
+        </form>
+    </div>
+</body>
+</html>

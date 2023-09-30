@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="number" id="X" />
+    <input type="number" id="Y" />
+    <button onclick="Send()">Send</button>
+    <h1 id="result"></h1>
+
+    <script>
+        function Send() {
+            let x = document.querySelector("#X").value;
+            let y = document.querySelector("#Y").value;
+
+            const formData = new FormData();
+            formData.append("X", x);
+            formData.append("Y", y);
+
+            var request = new XMLHttpRequest();
+            request.open("POST", "/task5/");
+            request.send(formData);
+
+            request.onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    let result = request.response;
+                    document.querySelector('#result').innerHTML = result;
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

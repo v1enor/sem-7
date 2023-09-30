@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 0,
+    "PhoneNumber": "+375445573590",
+    "OwnerName": "bruh"
+  },
+  {
+    "Id": 1,
+    "PhoneNumber": "+375441231231",
+    "OwnerName": "sanya"
+  },
+  {
+    "Id": 2,
+    "PhoneNumber": "+375441231231",
+    "OwnerName": "katie"
+  },
+  {
+    "Id": 3,
+    "PhoneNumber": "+375331231231",
+    "OwnerName": "kakelys"
+  }
+]

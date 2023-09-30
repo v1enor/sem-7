@@ -1,0 +1,44 @@
+[
+  {
+    "Id": 1,
+    "Name": "Alexander",
+    "Surname": "Valdaitsevv",
+    "PhoneNumber": "+375445573501"
+  },
+  {
+    "Id": 2,
+    "Name": "Katherine",
+    "Surname": "Vrublevskayaa",
+    "PhoneNumber": "+375333827583"
+  },
+  {
+    "Id": 3,
+    "Name": "Vladislav",
+    "Surname": "Gud",
+    "PhoneNumber": "+375258365837"
+  },
+  {
+    "Id": 5,
+    "Name": "Anton",
+    "Surname": "Apalanyuk",
+    "PhoneNumber": "+375295473854"
+  },
+  {
+    "Id": 6,
+    "Name": "Anton",
+    "Surname": "Dimitriadi",
+    "PhoneNumber": "+375333857693"
+  },
+  {
+    "Id": 7,
+    "Name": "Eugene",
+    "Surname": "Drevoten",
+    "PhoneNumber": "+375447658432"
+  },
+  {
+    "Id": 4,
+    "Name": "Anton",
+    "Surname": "Tkachevv",
+    "PhoneNumber": "+375447564397"
+  }
+]
