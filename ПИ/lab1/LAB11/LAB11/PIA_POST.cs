@@ -11,9 +11,8 @@ namespace LAB11
             string paramB = context.Request.Form["ParmB"];
         
             context.Response.ContentType = "text/plain";
-            context.Response.Write($"POST-Http-XYZ:ParmA = {paramA}, ParmB = {paramB}");
+            context.Response.Write($"POST-Http-PIA:ParmA = {paramA}, ParmB = {paramB}");
         }
-
         public bool IsReusable { get { return false; } }
     }
 }

@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+
 # Load the dataset
 data = pd.read_csv("data.csv")
 
@@ -9,7 +10,8 @@ data = pd.read_csv("data.csv")
 data.info()
 
 # Count the number of missing values
-print(data.isnull().sum())
+missing_values = data.isnull().sum()
+print(missing_values)
 
 # Display the distribution of the 'Saving accounts' column before handling missing values
 plt.figure(figsize=(8, 6))
@@ -40,14 +42,12 @@ plt.xlabel('Value')
 plt.ylabel('Frequency')
 plt.show()
 
-
 # Create a boxplot of the 'Credit amount' column
 plt.figure(figsize=(8, 6))
 plt.boxplot(data["Duration"])
 plt.title("Boxplot of Credit amount")
 plt.ylabel("Credit amount")
 plt.show()
-
 
 # Convert non-numeric columns to numerical format
 data_convert = data.apply(pd.to_numeric, errors='coerce')
@@ -61,50 +61,106 @@ class_counts = data['Sex'].value_counts()
 # Print the class counts
 print(class_counts)
 
+# Check data balance
+balanced = class_counts.value_counts()
+print(balanced)
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Загрузка датасета
+data = pd.read_csv("data.csv")
+
+# Проверка информации о датасете  
+data.info()
+
+# Подсчет пропущенных значений
+missing_values = data.isnull().sum()
+print(missing_values)
+
+# Визуализация распределения столбца 'Saving accounts' до обработки пропущенных значений
+plt.figure(figsize=(8, 6))
+plt.hist(data['Saving accounts'].dropna(), bins=10, edgecolor='k', alpha=0.5)
+plt.title('Distribution before handling missing values')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
+plt.show()
+
+# Визуализация пропущенных значений до их обработки
+sns.heatmap(data.isnull(), cbar=False)
+plt.title('Missing Values before handling')
+plt.show()
+
+# Заполнение пропущенных значений 'Unknown'
+data['Saving accounts'].fillna('Unknown', inplace=True)
+
+# Визуализация пропущенных значений после обработки  
+sns.heatmap(data.isnull(), cbar=False)
+plt.title('Missing Values after handling')
+plt.show()
+
+# Визуализация распределения столбца 'Saving accounts' после обработки пропущенных значений
+plt.figure(figsize=(8, 6))
+plt.hist(data['Saving accounts'], bins=10, edgecolor='k', alpha=0.5)
+plt.title('Distribution after handling missing values')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
+plt.show()
+
+# Построение boxplot для столбца 'Credit amount'
+plt.figure(figsize=(8, 6))
+plt.boxplot(data["Duration"])
+plt.title("Boxplot of Credit amount")
+plt.ylabel("Credit amount")
+plt.show()
+
+# Преобразование нечисловых столбцов в числовой формат
+data_convert = data.apply(pd.to_numeric, errors='coerce')
+
+# Вывод обновленного датасета  
+print(data_convert)
+
+# Подсчет количества классов в целевой переменной
+class_counts = data['Sex'].value_counts()
+print(class_counts)
+
+# Проверка сбалансированности классов
+balanced = class_counts.value_counts()
+print(balanced)
 
 
-print(data_convert.var())
+import pandas as pd
+from sklearn.decomposition import PCA  
+import numpy as np
 
+# Загрузка данных
+data = pd.read_csv('data.csv') 
 
-var_threshold = 0.1  # Пороговое значение дисперсии
-low_var_features = []
-for feature in data_convert.columns:
-    if np.var(data_convert[feature]) < var_threshold:
-        low_var_features.append(feature)
+# Выделение числовых признаков
+X = data.select_dtypes(include=[np.number])
 
-filtered_data = data_convert.drop(low_var_features, axis=1)
+# Применение PCA 
+pca = PCA(n_components=0.95)
+X_reduced = pca.fit_transform(X)
 
-# Вывод отфильтрованного датасета
-print(filtered_data.var())
+print("Размерность данных до снижения:", X.shape)
+print("Размерность данных после снижения:", X_reduced.shape)
 
+# Выбор признаков с низкой дисперсией
+low_variance = [col for col in X.columns if X[col].var() < 0.01]  
+X_reduced = X.drop(low_variance, axis=1)
 
+print("Размерность данных после удаления низкодисперсионных признаков:", X_reduced.shape)
 
-# Расчет матрицы корреляции
-correlation_matrix = data_convert.corr().abs()
+# Выбор признаков с высокой корреляцией
+corr_matrix = X.corr()
+high_corr = set()
+for i in range(len(corr_matrix .columns)):
+    for j in range(i):
+        if abs(corr_matrix.iloc[i, j]) > 0.1:
+            colname = corr_matrix.columns[i]
+            high_corr.add(colname)
+X_reduced.drop(high_corr, axis=1, inplace=True) 
 
-# Задание порогового значения для высокой корреляции
-corr_threshold = 0.8
-
-# Поиск признаков с высокой корреляцией
-high_corr_features = set()
-n_features = correlation_matrix.shape[0]
-for i in range(n_features):
-    for j in range(i+1, n_features):
-        if correlation_matrix.iloc[i, j] > corr_threshold:
-            feature_i = correlation_matrix.columns[i]
-            feature_j = correlation_matrix.columns[j]
-            high_corr_features.add((feature_i, feature_j))
-
-# Вывод признаков с высокой корреляцией
-print(high_corr_features)
-
-
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-
-X_full = data[[...all columns...]]  
-y = data['target']
-
-X_train_full, X_test, y_train, y_test = train_test_split(X_full, y) 
-
-logreg_full = LogisticRegression().fit(X_train_full, y_train)
+print("Размерность данных после удаления высококоррелированных признаков:", X_reduced.shape)

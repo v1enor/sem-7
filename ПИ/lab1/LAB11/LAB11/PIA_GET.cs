@@ -10,7 +10,11 @@ namespace LAB11
 
         public void ProcessRequest(HttpContext context)
         {
-            string result = "GET-Http-SKM: ParamA = " + context.Request.Params[0] + "\n ParamB = " + context.Request.Params[1];
+
+            string paramA = context.Request["ParamA"];
+            string paramB = context.Request["ParamB"];
+
+            string result = "GET-Http-PIA: ParamA = " + paramA + "\n ParamB = " + paramB;
             context.Response.Write(result);
         }
     }

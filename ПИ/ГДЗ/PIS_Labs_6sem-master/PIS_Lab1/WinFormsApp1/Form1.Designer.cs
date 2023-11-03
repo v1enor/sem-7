@@ -28,80 +28,87 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(331, 192);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 30);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "+     +";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(222, 129);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(130, 29);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(417, 129);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(130, 29);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(265, 306);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(242, 29);
-            this.textBox3.TabIndex = 3;
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.BackColor = System.Drawing.SystemColors.MenuText;
-            this.progressBar1.Location = new System.Drawing.Point(205, 103);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(130, 10);
-            this.progressBar1.TabIndex = 4;
-            // 
-            // progressBar2
-            // 
-            this.progressBar2.Location = new System.Drawing.Point(430, 88);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(130, 12);
-            this.progressBar2.TabIndex = 5;
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.progressBar2);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
-            this.Name = "Form1";
-            this.Text = "ебало";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+        button1 = new Button();
+        textBox1 = new TextBox();
+        textBox2 = new TextBox();
+        textBox3 = new TextBox();
+        progressBar1 = new ProgressBar();
+        progressBar2 = new ProgressBar();
+        SuspendLayout();
+        // 
+        // button1
+        // 
+        button1.Location = new Point(257, 137);
+        button1.Margin = new Padding(2, 2, 2, 2);
+        button1.Name = "button1";
+        button1.Size = new Size(76, 21);
+        button1.TabIndex = 0;
+        button1.Text = "+     +";
+        button1.UseVisualStyleBackColor = true;
+        button1.Click += button1_Click;
+        // 
+        // textBox1
+        // 
+        textBox1.Location = new Point(173, 92);
+        textBox1.Margin = new Padding(2, 2, 2, 2);
+        textBox1.Name = "textBox1";
+        textBox1.Size = new Size(102, 23);
+        textBox1.TabIndex = 1;
+        textBox1.TextAlign = HorizontalAlignment.Center;
+        textBox1.TextChanged += textBox1_TextChanged;
+        // 
+        // textBox2
+        // 
+        textBox2.Location = new Point(324, 92);
+        textBox2.Margin = new Padding(2, 2, 2, 2);
+        textBox2.Name = "textBox2";
+        textBox2.Size = new Size(102, 23);
+        textBox2.TabIndex = 2;
+        textBox2.TextAlign = HorizontalAlignment.Center;
+        // 
+        // textBox3
+        // 
+        textBox3.Location = new Point(206, 219);
+        textBox3.Margin = new Padding(2, 2, 2, 2);
+        textBox3.Name = "textBox3";
+        textBox3.Size = new Size(189, 23);
+        textBox3.TabIndex = 3;
+        textBox3.TextAlign = HorizontalAlignment.Center;
+        textBox3.TextChanged += textBox3_TextChanged;
+        // 
+        // progressBar1
+        // 
+        progressBar1.BackColor = SystemColors.MenuText;
+        progressBar1.Location = new Point(159, 74);
+        progressBar1.Margin = new Padding(2, 2, 2, 2);
+        progressBar1.Name = "progressBar1";
+        progressBar1.Size = new Size(101, 7);
+        progressBar1.TabIndex = 4;
+        // 
+        // progressBar2
+        // 
+        progressBar2.Location = new Point(334, 63);
+        progressBar2.Margin = new Padding(2, 2, 2, 2);
+        progressBar2.Name = "progressBar2";
+        progressBar2.Size = new Size(101, 9);
+        progressBar2.TabIndex = 5;
+        // 
+        // Form1
+        // 
+        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(622, 321);
+        Controls.Add(progressBar2);
+        Controls.Add(progressBar1);
+        Controls.Add(textBox3);
+        Controls.Add(textBox2);
+        Controls.Add(textBox1);
+        Controls.Add(button1);
+        Margin = new Padding(2, 2, 2, 2);
+        Name = "Form1";
+        Text = "ебало";
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
