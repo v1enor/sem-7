@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import load_diabetes
 
 # Шаг 1: Загрузка и предобработка данных
-df=pd.read_csv("diabetes.csv")
+df=pd.read_csv("lab3/diabetes.csv")
 
 X=df.iloc[:,:8].values
 Y=df.iloc[:,-1].values

@@ -1,0 +1,24 @@
+@hostname=localhost
+
+@port=5154
+
+GET http://{{hostname}}:{{port}}/Start/eror404
+###
+GET http://belstu.by
+###
+GET http://{{hostname}}:{{port}}/Start/Index
+###
+GET http://{{hostname}}:{{port}}/Start/One
+###
+GET http://{{hostname}}:{{port}}/Start/Two
+### 
+GET http://{{hostname}}:{{port}}/Start/Three
+###
+POST http://{{hostname}}:{{port}}/Start/Index
+###
+POST http://{{hostname}}:{{port}}/Start/One
+###
+POST http://{{hostname}}:{{port}}/Start/Two
+###
+POST http://{{hostname}}:{{port}}/Start/Three
+###

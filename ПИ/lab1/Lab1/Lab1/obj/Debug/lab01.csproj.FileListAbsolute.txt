@@ -1,2 +1,0 @@
-C:\Users\ila\Desktop\Study\ПИ\lab1\Lab1\Lab1\obj\Debug\lab01.csproj.AssemblyReference.cache
-C:\Users\ila\Desktop\Study\ПИ\lab1\Lab1\Lab1\obj\Debug\lab01.csproj.CoreCompileInputs.cache

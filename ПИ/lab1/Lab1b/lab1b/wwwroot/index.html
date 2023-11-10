@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>WebSocket Sample Application</title>
+    <style>
+        table {
+            border: 0;
+        }
+
+        .commslog-data {
+            font-family: Consolas, Courier New, Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebSocket Sample Ilusha lab</h1>
+    <p id="stateLabel">Ready to connect...</p>
+    <div>
+        <label for="connectionUrl">WebSocket Server URL:</label>
+        <input id="connectionUrl" />
+        <button id="connectButton" type="button">Start</button>
+        <button id="closeButton" disabled>Stop</button>
+    </div>
+
+    <h2>Communication Log</h2>
+    <table style="width: 800px">
+        <tbody id="commsLog"></tbody>
+    </table>
+
+    <script>
+        const connectionUrl = document.getElementById("connectionUrl");
+        const connectButton = document.getElementById("connectButton");
+        const stateLabel = document.getElementById("stateLabel");
+        const commsLog = document.getElementById("commsLog");
+        const closeButton = document.getElementById("closeButton");
+        let socket;
+
+        const scheme = document.location.protocol === "https:" ? "wss" : "ws";
+        const port = document.location.port ? `:${document.location.port}` : "";
+        connectionUrl.value = `${scheme}://${document.location.hostname}${port}/ws`;
+
+        function updateState() {
+            if (!socket) {
+                disable();
+            } else {
+                switch (socket.readyState) {
+                    case WebSocket.CLOSED:
+                        stateLabel.innerHTML = "Closed";
+                        break;
+                    case WebSocket.CLOSING:
+                        stateLabel.innerHTML = "Closing...";
+                        break;
+                    case WebSocket.CONNECTING:
+                        stateLabel.innerHTML = "Connecting...";
+                        break;
+                    case WebSocket.OPEN:
+                        stateLabel.innerHTML = "Open";
+                        break;
+                    default:
+                        stateLabel.innerHTML = "Unknown WebSocket State: " + htmlEscape(socket.readyState);
+                        break;
+                }
+            }
+        }
+
+        closeButton.onclick = function () {
+            connectButton.disabled = false;
+            closeButton.disabled = true;
+            if (!socket || socket.readyState !== WebSocket.OPEN) {
+                alert("socket not connected");
+            }
+            socket.close(1000, "Closing from client");
+        };
+
+        connectButton.onclick = function () {
+            connectButton.disabled = true;
+            closeButton.disabled = false;
+            stateLabel.innerHTML = "Connecting";
+            socket = new WebSocket(connectionUrl.value);
+            socket.onopen = function () {
+                updateState();
+                commsLog.innerHTML += '<tr><td colspan="3" class="commslog-data">Connection opened</td></tr>';
+            };
+            socket.onclose = function (event) {
+                updateState();
+                commsLog.innerHTML += `<tr><td colspan="3" class="commslog-data">Connection closed. Code: ${htmlEscape(
+                    event.code
+                )}. Reason: ${htmlEscape(event.reason)}</td></tr>`;
+            };
+            socket.onerror = updateState;
+            socket.onmessage = function (event) {
+                commsLog.innerHTML += `<tr>${htmlEscape(event.data)}</tr>`;
+            };
+        };
+
+        function htmlEscape(str) {
+            return str.toString().replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>
