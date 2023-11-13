@@ -2,5 +2,5 @@
 
 @port=5014
 
-GET http://{{hostname}}:{{port}}/Status/S500
+GET http://{{hostname}}:{{port}}/Status/S200
 
