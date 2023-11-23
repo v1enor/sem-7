@@ -1,0 +1,25 @@
+@hostname=localhost
+@port=5086
+
+###
+GET http://{{hostname}}:{{port}}/it/3/fwefs
+
+
+###
+GET http://{{hostname}}:{{port}}/it/true/rgr
+###
+POST http://{{hostname}}:{{port}}/it/true/rgr
+
+
+###         
+GET http://{{hostname}}:{{port}}/it/3.3/dfds
+###
+DELETE http://{{hostname}}:{{port}}/it/3.3/dfefe
+
+
+###
+PUT http://{{hostname}}:{{port}}/it/sde/124
+
+
+###
+POST http://{{hostname}}:{{port}}/it/vlad@gmail.com

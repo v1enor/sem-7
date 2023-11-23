@@ -1,0 +1,10 @@
+.left-menu {
+    border: 2px solid #000;
+    background: #F4ECE4;
+    display: flex;
+    width: fit-content;
+    max-width: 20%;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,27 @@
+/* Calendar.css */
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-rows: minmax(20px, auto);
+    gap: 1px;
+}
+
+.calendar h1 {
+    grid-column: 1 / -1;
+}
+
+.calendar .grid {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 50px repeat(7, 1fr);
+    grid-auto-rows: 40px;
+    gap: 1px;
+}
+
+/* Event.css */
+.event {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 4px;
+    border-radius: 4px;
+}

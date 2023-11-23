@@ -35,7 +35,6 @@ knn_model.fit(X_train, y_train)
 svc_model = SVC()
 svc_model.fit(X_train, y_train)
 
-
 # Шаг 6: Оценка моделей
 # Дерево решений
 dt_pred = dt_model.predict(X_test)

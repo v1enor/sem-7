@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Debug";
+}
+
+<div>
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Полная информация о пользователях
+            </th>
+        </tr>
+        @foreach (var u in ViewBag.UserList)
+        {
+            <tr>
+                <td>
+                    @u.FullDesc
+                    <hr />
+                </td>
+            </tr>
+        }
+    </table>
+    <div style="color:red;">
+        @ViewBag.Error
+    </div>
+</div>

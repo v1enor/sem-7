@@ -1,4 +1,4 @@
-import 'package:firebaseapp/simple_widget.dart';
+import 'package:lab111/simple_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 

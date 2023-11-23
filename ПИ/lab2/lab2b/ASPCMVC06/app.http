@@ -1,0 +1,41 @@
+@hostname=localhost
+@port=5130
+
+###
+GET http://{{hostname}}:{{port}}/MResearch/M01/1
+###
+GET http://{{hostname}}:{{port}}/MResearch/M01
+###
+GET http://{{hostname}}:{{port}}/MResearch
+###
+GET http://{{hostname}}:{{port}}/
+###
+GET http://{{hostname}}:{{port}}/V2/MResearch/M01
+###
+GET http://{{hostname}}:{{port}}/V3/MResearch/string/M01
+
+
+
+###
+GET http://{{hostname}}:{{port}}/V2
+###
+GET http://{{hostname}}:{{port}}/V2/MResearch
+###
+GET http://{{hostname}}:{{port}}/V2/MResearch/M02
+###
+GET http://{{hostname}}:{{port}}/MResearch/M02
+###
+GET http://{{hostname}}:{{port}}/V3/MResearch/string/M02
+
+
+###
+GET http://{{hostname}}:{{port}}/V3
+###
+GET http://{{hostname}}:{{port}}/V3/MResearch/test/
+###
+GET http://{{hostname}}:{{port}}/V3/MResearch/string/M03
+
+
+###
+GET http://{{hostname}}:{{port}}/abcde/dfds
+

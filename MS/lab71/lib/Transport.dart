@@ -62,7 +62,7 @@ class _TransportPageState extends State<TransportPage> {
     );
 
     final db = await database;
-    final id = 1;
+    final id = 11;
     final rowsUpdated = await db.update('transport', {
       'name': 'Bike',
       'type': 'Vehicle',
@@ -79,7 +79,7 @@ class _TransportPageState extends State<TransportPage> {
     );
 
     final db = await database;
-    final id = 1;
+    final id = 11;
     final rowsDeleted = await db.delete('transport', where: 'id = ?', whereArgs: [id]);
     print('Deleted $rowsDeleted transport(s)');
     _loadTransport();
