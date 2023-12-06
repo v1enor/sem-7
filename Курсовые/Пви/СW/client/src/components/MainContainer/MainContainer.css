@@ -7,3 +7,10 @@
     flex: 1 0 0;
     align-self: stretch;
 }
+
+.calendar{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-rows: minmax(20px, auto);
+    gap: 1px;
+}

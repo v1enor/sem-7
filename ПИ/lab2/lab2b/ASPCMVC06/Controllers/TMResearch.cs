@@ -12,7 +12,7 @@ namespace ASPCMVC06.Controllers
 
         public IActionResult M02()
         {
-            return Content("GET:M0323");
+            return Content("GET:M02 ");
         }
 
         public IActionResult M03()

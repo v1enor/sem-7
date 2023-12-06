@@ -1,10 +1,15 @@
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+
+const timeRoutes = require('./routes/timeRoutes.js');
+const userRoutes = require('./routes/userRoutes.js');
+
 require('dotenv').config(); // Загрузка переменных окружения из файла .env
 
-const express = require('express');
-const mongoose = require('mongoose');
-const timeRoutes = require('./routes/timeRoutes.js');
-
 const app = express();
+app.use(cors());
+
 const PORT = process.env.PORT;
 
 // Подключение к базе данных MongoDB из переменной окружения
@@ -20,6 +25,7 @@ mongoose.connect(process.env.MONGODB_URI)
 // Определение middleware для парсинга JSON
 app.use(express.json());
 app.use('/api', timeRoutes);
+app.use('/api', userRoutes);
 
 // Пример корневого маршрута для проверки работы сервера
 app.get('/', (req, res) => {
@@ -30,3 +36,4 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

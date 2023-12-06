@@ -98,12 +98,6 @@ namespace ASPCMVC06
              pattern: "{*uri}",
              defaults: new { controller = "TMResearch", action = "MXX" });
 
-
-
-
-
-
-
             app.Run();
         }
     }

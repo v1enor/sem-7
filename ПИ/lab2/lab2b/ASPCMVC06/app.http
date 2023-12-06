@@ -12,7 +12,7 @@ GET http://{{hostname}}:{{port}}/
 ###
 GET http://{{hostname}}:{{port}}/V2/MResearch/M01
 ###
-GET http://{{hostname}}:{{port}}/V3/MResearch/string/M01
+GET http://{{hostname}}:{{port}}/V3/MResearch/string2/M01
 
 
 

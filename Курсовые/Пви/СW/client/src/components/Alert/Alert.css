@@ -1,0 +1,11 @@
+.alert-popup {
+    background-color: #ffffff;
+    border: 3px solid #000000;
+    border-radius: 0;
+}
+
+.alert-title {
+     background-color: #ffffff;
+   color: #000000;
+   border: none;
+}

@@ -2,12 +2,18 @@ import React from 'react';
 import './LeftMenu.css';
 import Button from '../Button/Button';
 
+const handleLogout = () => {
+  localStorage.removeItem('authToken');
+   window.location.href = "/signin";
+};
+
+
 const LeftMenu = () => {
   return (
     <div className="left-menu">
-        <Button text="HomeHomeHomeH omeHomeHomeHomeHome HomeHomeHome HomeHomeHomeHome" onClick={() => console.log('Clicked!')} />
-        <Button text="About" onClick={() => console.log('Clicked!')} />
-        <Button text="Contact" onClick={() => console.log('Clicked!')} />
+        <a href='/'>  <Button text="Главная" /> </a>
+        <a href='/signin'> <Button text="Вход" /> </a>
+        <Button text="Выход" onClick={handleLogout} />
     </div>
   );
 };

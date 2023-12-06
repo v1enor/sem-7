@@ -1,0 +1,107 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt');
+const User = require('../models/userModel.js');
+
+const jwt = require('jsonwebtoken');
+
+function generateAccessToken(userId) {
+    // Создаем токен с идентификатором пользователя в качестве полезной нагрузки
+    // и секретным ключом для подписи токена
+    const token = jwt.sign({ id: userId }, 'your-secret-key', { expiresIn: '1h' });
+
+    return token;
+}
+
+
+// Create a new user
+router.post('/user', async (req, res) => {
+    const user = new User(req.body);
+    try {
+        const savedUser = await user.save();
+        res.send(savedUser);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+});
+
+
+router.get('/check-token', (req, res) => {
+    const token = req.headers['authorization'].split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ isValid: false, message: 'No token provided.' });
+    }
+
+    jwt.verify(token, 'your-secret-key', (err, decoded) => {
+        if (err) {
+            return res.status(500).json({ isValid: false, message: 'Failed to authenticate token.' });
+        }
+
+        // if everything good, token is valid
+        res.json({ isValid: true });
+    });
+});
+
+
+// User login
+router.post('/login', async (req, res) => {
+    try {
+        const user = await User.findOne({ login: req.body.login });
+        if (!user) return res.status(400).send('Invalid Username');
+        if (!req.body.password) return res.status(400).send('Password is required');
+        const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+        if (!passwordMatch) return res.status(400).send('Invalid Password');
+        const token = generateAccessToken(user._id);
+        res.send({ token });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+// Get all users
+router.get('/user', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.send(users);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+
+
+
+// Get a user by id
+router.get('/:userId', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        res.send(user);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+// Update a user by id
+router.patch('/:userId', async (req, res) => {
+    try {
+        const updatedUser = await User.updateOne(
+            { _id: req.params.userId },
+            { $set: req.body }
+        );
+        res.send(updatedUser);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+// Delete a user by id
+router.delete('/:userId', async (req, res) => {
+    try {
+        const removedUser = await User.remove({ _id: req.params.userId });
+        res.send(removedUser);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+module.exports = router;
