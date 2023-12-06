@@ -5,18 +5,27 @@ const User = require('../models/userModel.js');
 
 const jwt = require('jsonwebtoken');
 
-function generateAccessToken(userId) {
-    // Создаем токен с идентификатором пользователя в качестве полезной нагрузки
-    // и секретным ключом для подписи токена
-    const token = jwt.sign({ id: userId }, 'your-secret-key', { expiresIn: '1h' });
-
+function generateAccessToken(user) {
+    const token = jwt.sign({ id: user._id, role: user.roles }, 'your-secret-key', { expiresIn: '1h' });
     return token;
 }
 
-
 // Create a new user
 router.post('/user', async (req, res) => {
-    const user = new User(req.body);
+    const allowedRoles = ['user', 'manager']; // Укажите разрешенные роли
+
+    const userRoles = req.body.roles || ['user']; // Получение ролей из запроса
+
+    if (userRoles.length > 0 ) {
+        const isValidRole = userRoles.every(role => allowedRoles.includes(role)); // Проверка на доступные роли
+
+        if (!isValidRole) {
+            return res.status(400).send('Недопустимая роль');
+        }
+    }
+
+    const user = new User({...req.body, roles: userRoles });
+
     try {
         const savedUser = await user.save();
         res.send(savedUser);
@@ -38,9 +47,27 @@ router.get('/check-token', (req, res) => {
             return res.status(500).json({ isValid: false, message: 'Failed to authenticate token.' });
         }
 
-        // if everything good, token is valid
-        res.json({ isValid: true });
+        // Get the roles from the decoded token
+        const roles = decoded.role;
+
+        // Return the list of token roles
+        res.json({ isValid: true, roles });
     });
+});
+
+
+router.post('/admin/login', async (req, res) => {
+    try {
+        const user = await User.findOne({ login: req.body.login });
+        if (!user) return res.status(400).send('Invalid Username');
+        if (!req.body.password) return res.status(400).send('Password is required');
+        const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+        if (!passwordMatch) return res.status(400).send('Invalid Password');
+        const token = generateAccessToken(user._id, user.admin);
+        res.send({ token });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 });
 
 
@@ -52,12 +79,14 @@ router.post('/login', async (req, res) => {
         if (!req.body.password) return res.status(400).send('Password is required');
         const passwordMatch = await bcrypt.compare(req.body.password, user.password);
         if (!passwordMatch) return res.status(400).send('Invalid Password');
-        const token = generateAccessToken(user._id);
+        const token = generateAccessToken(user);
         res.send({ token });
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
+
+
 // Get all users
 router.get('/user', async (req, res) => {
     try {

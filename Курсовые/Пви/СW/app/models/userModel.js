@@ -34,9 +34,9 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  admin: {
-    type: Boolean,
-    default: false
+  roles: {
+    type: [String], 
+    default: ['user']
   }
 });
 

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const timeRoutes = require('./routes/timeRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');
+const adminRoutes = require('./routes/adminRoutes.js');
 
 require('dotenv').config(); // Загрузка переменных окружения из файла .env
 
@@ -26,6 +27,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(express.json());
 app.use('/api', timeRoutes);
 app.use('/api', userRoutes);
+app.use('/admin', adminRoutes);
 
 // Пример корневого маршрута для проверки работы сервера
 app.get('/', (req, res) => {
@@ -36,4 +38,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
