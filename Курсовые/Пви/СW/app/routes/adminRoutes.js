@@ -40,9 +40,7 @@ router.get('/users', async (req, res) => {
 router.put('/users/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const {  email, } = req.body;
-
-
+        const { email } = req.body;
         const updatedUser = await User.findByIdAndUpdate(id, { email }, { new: true });
 
         res.send(updatedUser);
@@ -64,10 +62,20 @@ router.patch('/users/:id/status', async (req, res) => {
     }
 });
 
+router.post('/user', async (req, res) => {
 
 
+    const user = new User(req.body);
 
+    try {
+        const savedUser = await user.save();
+        res.send(savedUser);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+});
 
 
 module.exports = router;
+
 

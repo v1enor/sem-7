@@ -24,7 +24,7 @@ const RegisterPage = () => {
                     timer: 1000,
                 }).then((result) => {
                    
-                        window.location.href = "/"; // переход на страницу входа после нажатия кнопки "Войти"
+                        window.location.href = "/adminpanel"; // переход на страницу входа после нажатия кнопки "Войти"
                     
                 });
             })

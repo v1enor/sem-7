@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./styles/RegisterPage.css";
 import { authenticateUser } from "../../services/apiUser";
-import Alert from '../../components/Alert/Alert';
+import Alert from '../../components/Alert/AlertForm';
 
 const RegisterPage = () => {
 

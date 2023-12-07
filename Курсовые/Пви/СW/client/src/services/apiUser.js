@@ -64,7 +64,6 @@ export async function authenticateAdmin(user) {
     });
 }
 
-
 export async function getUsers() {
   const token = localStorage.getItem('authToken');
 
@@ -87,4 +86,49 @@ export async function getUsers() {
   });
 }
 
+export async function createUser(user) {
+  const token = localStorage.getItem('authToken');
+
+  return fetch(`${API_URL}/admin/user`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(user)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .catch(error => {
+    // Handle any errors
+    throw new Error(error.message);
+  });
+}
+
+export async function updateUser(user) {
+  const token = localStorage.getItem('authToken');
+
+  return fetch(`${API_URL}/admin/users/${user.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(user)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .catch(error => {
+    // Handle any errors
+    throw new Error(error.message);
+  });
+}
 

@@ -1,0 +1,13 @@
+#admin-header{
+    display: flex;
+
+}
+input{
+    max-width: 200px;
+    min-width: 20px;
+    margin: 0 10px;
+}
+
+#admin-header h2{
+    width: 70%;
+}
