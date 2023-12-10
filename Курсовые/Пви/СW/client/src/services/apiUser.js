@@ -112,7 +112,7 @@ export async function createUser(user) {
 export async function updateUser(user) {
   const token = localStorage.getItem('authToken');
 
-  return fetch(`${API_URL}/admin/users/${user.id}`, {
+  return fetch(`${API_URL}/admin/users/${user._id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

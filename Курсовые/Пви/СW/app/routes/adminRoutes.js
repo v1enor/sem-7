@@ -40,8 +40,7 @@ router.get('/users', async (req, res) => {
 router.put('/users/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { email } = req.body;
-        const updatedUser = await User.findByIdAndUpdate(id, { email }, { new: true });
+        const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
 
         res.send(updatedUser);
     } catch (err) {

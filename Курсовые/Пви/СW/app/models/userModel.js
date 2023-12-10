@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   companies: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'Company'
   }],
   status: {
