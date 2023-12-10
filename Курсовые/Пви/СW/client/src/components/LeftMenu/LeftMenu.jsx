@@ -13,7 +13,11 @@ const LeftMenu = () => {
     <div className="left-menu">
         <a href='/'>  <Button text="Главная" /> </a>
         <a href='/signin'> <Button text="Вход" /> </a>
-        <Button text="Выход" onClick={handleLogout} />
+        <a href='/projects'> <Button text="Проекты" /> </a>
+        <a href='/teams'> <Button text="Команды" /> </a>
+        <div style={{ marginTop: '20px' }}>
+        <Button text="Выход" onClick={handleLogout}  />
+        </div>
     </div>
   );
 };

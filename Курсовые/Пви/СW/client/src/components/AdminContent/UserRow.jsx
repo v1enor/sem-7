@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { updateUser } from '../../services/apiUser';
-import Alert from '../Alert/Alert';
-import { kMaxLength } from 'buffer';
+
 const UserRow = ({ user }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [updatedUser, setUpdatedUser] = useState(user);
@@ -47,21 +46,15 @@ const UserRow = ({ user }) => {
             <label>Login:</label>
             <input type="text" size={10} defaultValue={user.login} onChange={(event) => handleChange(event, 'login')} readOnly={!isEditing} />
             <label>Status:</label>
-            <input type="text" size={3}  defaultValue={user.status} onChange={(event) => handleChange(event, 'status')} readOnly={!isEditing} />
+            <input type="text"  size={10} defaultValue={user.status} onChange={(event) => handleChange(event, 'status')} readOnly={!isEditing} />
             <label>Email:</label>
-            <input type="text" size={10} defaultValue={user.email} onChange={(event) => handleChange(event, 'email')} readOnly={!isEditing} />
+            <input type="text"  defaultValue={user.email} onChange={(event) => handleChange(event, 'email')} readOnly={!isEditing} />
             <label>Roles:</label>
             <input 
             type="text" 
             defaultValue={user.roles ? user.roles.join(', ') : ''} 
             onChange={(event) => handleChange(event, 'roles')} 
-            readOnly={!isEditing} 
-            />
-            <label>Companies:</label>
-            <input 
-            type="text" 
-            defaultValue={user.companies ? user.companies.join(', ') : ''} 
-            onChange={(event) => handleChange(event, 'companies')} 
+            size={15}
             readOnly={!isEditing} 
             />
             <button onClick={handleEdit}>Edit</button>

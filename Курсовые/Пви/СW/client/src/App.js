@@ -4,6 +4,8 @@ import RegisterPage from './components/Pages/RegisterPage';
 import LoginPage from './components/Pages/LoginPag';
 import AdminPage from './components/Pages/AdminLoginPage';
 import AdminPanel from './components/Pages/AdminPanel';
+import ProjectsPage from './components/Pages/ProjectsPage';
+import TeamsPage from './components/Pages/TeamsPage';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 
@@ -16,6 +18,8 @@ function App() {
         <Route path="/signin" element={<LoginPage />}/>
         <Route path="/admin" element={<AdminPage  />}/>
         <Route path="/adminpanel" element={<RouteWrapper  allowedRoles={['admin']}><AdminPanel /></RouteWrapper>} />
+        <Route path="/projects" element={<RouteWrapper  allowedRoles={['user']}><ProjectsPage /></RouteWrapper>} />
+        <Route path="/teams" element={<RouteWrapper  allowedRoles={['user']}><TeamsPage /></RouteWrapper>} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./styles/RegisterPage.css";
 import { authenticateUser } from "../../services/apiUser";
-import Alert from '../../components/Alert/AlertForm';
+import Alert from '../../components/Alert/Alert';
 
 const RegisterPage = () => {
 
@@ -31,7 +31,7 @@ const RegisterPage = () => {
             .catch(error => {
                 Alert.fire({
                     title: 'Ошибка!',
-                    text: 'Логин или пароль не тот!',
+                    text: error.message || 'Что-то пошло совсем не так!', 
                     icon: 'error',
                     confirmButtonText: 'Попробовать еще раз'
                 });
@@ -59,7 +59,7 @@ const RegisterPage = () => {
             </label>
 
             <button onClick={handleLogin}>Вход</button>
-            <a href="/signin">Нет аккаунта?</a>
+            <a href="/signup">Нет аккаунта?</a>
         </div>
     );
 };

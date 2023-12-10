@@ -6,8 +6,12 @@
     max-width: 20%;
     padding: 10px;
     flex-direction: column;
-
     align-items: stretch;
+    height: fit-content;
+}
+
+#ExitBtn{
+    margin-top: 25px;
 }
 
 .left-menu a {

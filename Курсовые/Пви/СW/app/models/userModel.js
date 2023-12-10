@@ -22,9 +22,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  companies: [{
+  teams: [{
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'Company'
+    ref: 'teams'
   }],
   status: {
     type: String,

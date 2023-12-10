@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel.js');
-
+const Manager = require('../models/managerModel.js');   
 const jwt = require('jsonwebtoken');
 
 function generateAccessToken(user) {
@@ -28,6 +28,11 @@ router.post('/user', async (req, res) => {
 
     try {
         const savedUser = await user.save();
+        if (userRoles.includes('manager')) {
+            const manager = new Manager({ userId: savedUser._id });
+            await manager.save();
+        }
+        
         res.send(savedUser);
     } catch (err) {
         res.status(400).send(err.message);
@@ -73,12 +78,13 @@ router.post('/admin/login', async (req, res) => {
 
 // User login
 router.post('/login', async (req, res) => {
-    try {
+    try { 
         const user = await User.findOne({ login: req.body.login });
-        if (!user) return res.status(400).send('Invalid Username');
-        if (!req.body.password) return res.status(400).send('Password is required');
+        if (!user) return res.status(400).send('Имя обязательно');
+        if (!req.body.password) return res.status(400).send('Пароль обязателен');
+        if (user.status !== 'active') return res.status(400).send('Пользователь не активирован!');
         const passwordMatch = await bcrypt.compare(req.body.password, user.password);
-        if (!passwordMatch) return res.status(400).send('Invalid Password');
+        if (!passwordMatch) return res.status(400).send('Пароль не тот ;(');
         const token = generateAccessToken(user);
         res.send({ token });
     } catch (error) {

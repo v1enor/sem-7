@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const timeRoutes = require('./routes/timeRoutes.js');
 const userRoutes = require('./routes/userRoutes.js');
 const adminRoutes = require('./routes/adminRoutes.js');
+const managerRoutes = require('./routes/managerRoutes.js');
+const projectsRoutes = require('./routes/projectsRoutes.js');
+const teamRoutes = require('./routes/teamRoutes.js');
 
 require('dotenv').config(); // Загрузка переменных окружения из файла .env
 
@@ -28,6 +31,9 @@ app.use(express.json());
 app.use('/api', timeRoutes);
 app.use('/api', userRoutes);
 app.use('/admin', adminRoutes);
+app.use('/manager', managerRoutes);
+app.use('/project', projectsRoutes);
+app.use('/team', teamRoutes);
 
 // Пример корневого маршрута для проверки работы сервера
 app.get('/', (req, res) => {

@@ -15,9 +15,11 @@ export default function CreateUserForm() {
         title: 'Создать пользователя',
         focusConfirm: false,
         html: `
-          <input class="swal2-input" id="Логин" type="text" placeholder="Имя" /><br />
-          <input class="swal2-input" id="Почта" type="email" placeholder="Почта" /><br />
-          <input class="swal2-input" id="Пароль" type="password" placeholder="Пароль" /><br />
+          <div class="inputs">
+          <input class="alert-input" id="Логин" type="text" placeholder="Имя" />
+          <input class="alert-input" id="Почта" type="email" placeholder="Почта" />
+          <input class="alert-input" id="Пароль" type="password" placeholder="Пароль" />
+          </div>
           <div class="swal2-checkbox" style="display: flex;">
           <label><input type="checkbox" id="user" value="user"> User</label><br>
           <label><input type="checkbox" id="manager" value="manager"> Manager</label><br>
@@ -33,6 +35,7 @@ export default function CreateUserForm() {
           icon: 'alert-icon',
           input: 'alert-input',
           inputLabel: 'alert-input-label',
+     
           
           // добавьте здесь другие классы, которые вы хотите настроить
       },
@@ -80,7 +83,7 @@ export default function CreateUserForm() {
 
   return (
     <div>
-      <button onClick={handleCreateUser}>Create User</button>
+      <button onClick={handleCreateUser}>Создать</button>
     </div>
   );
 }

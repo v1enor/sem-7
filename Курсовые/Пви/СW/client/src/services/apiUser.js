@@ -24,20 +24,21 @@ export async function authenticateUser(user) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user)
   })
-  .then(response => {
+  .then(async response => {
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(errorText);
       }
       return response.json();
     })
     .then(data => {
-      // Save the authentication token
+
       localStorage.setItem('authToken', data.token);
       return data;
     })
     .catch(error => {
       // Handle any errors
-      throw new Error(error.message);
+      throw new Error(error);
     });
 }
 
