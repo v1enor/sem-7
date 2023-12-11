@@ -3,22 +3,22 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import './Alert.css';
 import Alert from './Alert.js';
-import { getProjects } from '../../services/apiProjects'; // Импортируйте вашу функцию для получения проектов
-import { createProject } from '../../services/apiProjects.js';
+import { getTeams } from '../../services/apiTeams.js'; // Импортируйте вашу функцию для получения проектов
+import { createTeam } from '../../services/apiTeams.js';
 const MySwal = withReactContent(Swal);
 
-export default function CreateProjectForm  ({ updateProjects }) {
+export default function CreateTeamForm  ({ updateProjects }) {
 
-  const handleCreateProject = () => {
-    const CreateProjectForm = async () => {
+  const handleCreateTeam = () => {
+    const CreateTeamForm = async () => {
       const swalval = await MySwal.fire({
-        title: 'Создать проект',
+        title: 'Создать команду',
         focusConfirm: false,
         html: `
           <div class="inputs">
+          <input class="alert-input" id="Название" type="text" placeholder="Название" />
           <input class="alert-input" id="Заголовок" type="text" placeholder="Заголовок" />
           <input class="alert-input" id="Описание" type="text" placeholder="Описание" />
-          
           </div>
         `,
         confirmButtonText: 'Создать',
@@ -35,24 +35,23 @@ export default function CreateProjectForm  ({ updateProjects }) {
       buttonsStyling: false,
         preConfirm: () => {
           return {
-
+            name: document.getElementById('Название').value,
             title: document.getElementById('Заголовок').value,
             description: document.getElementById('Описание').value,
-      
           };
         },
       });
   
    
       if (swalval.value) {
-        createProject(swalval.value)
+        createTeam(swalval.value)
           .then(response => {
-            getProjects().then(data => {
+            getTeams().then(data => {
               updateProjects(data);
             });
             Alert.fire({
-              title: 'Проект создан!',
-              text: 'Проект успешно создан!',
+              title: 'Команда создана!',
+              text: 'Команда успешно создана!',
               icon: 'success',
               confirmButtonText: 'Ок',
             });
@@ -60,19 +59,19 @@ export default function CreateProjectForm  ({ updateProjects }) {
           .catch(error => {
             Alert.fire({
               title: 'Ошибка!',
-              text: 'Ошибка создания проекта!\n' + error.message,
+              text: 'Ошибка создания команды!\n' + error.message,
               icon: 'error',
               confirmButtonText: 'Ок',
             });
           });
       }
     };
-    CreateProjectForm();
+    CreateTeamForm();
   };
 
   return (
     <div>
-      <button onClick={handleCreateProject}>Создать</button>
+      <button onClick={handleCreateTeam}>Создать</button>
     </div>
   );
 }

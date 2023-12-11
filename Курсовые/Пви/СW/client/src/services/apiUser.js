@@ -133,3 +133,24 @@ export async function updateUser(user) {
   });
 }
 
+export async function getiduser() {
+  const token = localStorage.getItem('authToken');
+
+  return fetch(`${API_URL}/api/check-token-id`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .catch(error => {
+    // Handle any errors
+    throw new Error(error.message);
+  });
+}

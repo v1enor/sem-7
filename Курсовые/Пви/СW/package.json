@@ -10,7 +10,8 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^3.0.1",
+    "shortid": "^2.2.16"
   },
   "live": "nodemon server.js",
   "name": "cw",

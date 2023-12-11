@@ -6,6 +6,7 @@ import AdminPage from './components/Pages/AdminLoginPage';
 import AdminPanel from './components/Pages/AdminPanel';
 import ProjectsPage from './components/Pages/ProjectsPage';
 import TeamsPage from './components/Pages/TeamsPage';
+import TaskPage from './components/Pages/TaskPage';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/adminpanel" element={<RouteWrapper  allowedRoles={['admin']}><AdminPanel /></RouteWrapper>} />
         <Route path="/projects" element={<RouteWrapper  allowedRoles={['user']}><ProjectsPage /></RouteWrapper>} />
         <Route path="/teams" element={<RouteWrapper  allowedRoles={['user']}><TeamsPage /></RouteWrapper>} />
+        <Route path="/task" element={<RouteWrapper  allowedRoles={['user']}><TaskPage /></RouteWrapper>} />
       </Routes>
     </BrowserRouter>
   );

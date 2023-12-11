@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const shortid = require('shortid'); 
 
 const projectSchema = new Schema({
-        
+            _id :{
+                type: String,
+                default: shortid.generate,
+            },
             title: {
                 type: String,
                 required: true,
@@ -19,9 +23,9 @@ const projectSchema = new Schema({
                 default: 'active'
             },
             teamlist: {
-                type: [mongoose.Schema.Types.ObjectId],
+                type: [String],
                 required: true,
-                default: '65759df332119eaaa8d91cf9',
+                default: ['XktfCip27'],
                 ref: 'Team'
             },
 });

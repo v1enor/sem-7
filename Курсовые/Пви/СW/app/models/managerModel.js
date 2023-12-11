@@ -17,7 +17,7 @@ const managerSchema = new Schema({
        
     },
     projects: {
-        type: [mongoose.Schema.Types.ObjectId],
+        type: [String],
         ref: 'project'
     },
 

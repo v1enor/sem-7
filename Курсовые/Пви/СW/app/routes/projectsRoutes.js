@@ -70,11 +70,19 @@ router.post('/create', async (req, res) => {
         const project = new Project(req.body);
         await project.save();
 
+
+
         // Add project to project manager
         const manager = await Manager.findOne({ userId: req.user });
         if (manager) {
             manager.projects.push(project._id);
             await manager.save();
+        } if (!manager) {
+            const newManager = new Manager({
+                userId: req.user,
+                projects: [project._id]
+            });
+            await newManager.save();
         }
 
         res.status(201).json({ message: 'Project created successfully.' });

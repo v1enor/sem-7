@@ -28,22 +28,20 @@ function checkToken(req, res, next) {
 router.use(checkToken);
 
 router.post('/add', async (req, res) => {
-    const { userlist, manager } = req.body;
+    const { userlist = [], manager = []} = req.body;
 
     try {
         // Find users by login
         const users = await User.find({ login: { $in: userlist } });
-        if (users.length !== userlist.length) {
+        if (users.length !== userlist.length && userlist.length !== 0) {
             return res.status(400).json({ isValid: false, message: 'Some users do not exist.' });
         }
 
         //поиск пользователей и менеджеров по id
         const usersmanager = await User.find({ login: { $in: manager } });
-        if (usersmanager.length !== manager.length) {
+        if (usersmanager.length !== manager.length && manager.length !== 0) {
             return res.status(400).json({ isValid: false, message: 'Some users manager not exist.' });
         }
-
-
 
         // Find managers with userId equal to User.id
         const userIds = usersmanager.map(user => user.id);
@@ -52,8 +50,13 @@ router.post('/add', async (req, res) => {
             return res.status(400).json({ isValid: false, message: 'Some users are not managers.' });
         }
 
+
+        // Поиск пользователя 
+        const usermanager = await User.findById(req.user);
+
         // Create a new team
-        req.body.manager = userIds;
+        
+        req.body.manager = Array.from(new Set((req.body.manager || []).concat(usermanager.login)));
         const newTeam = new Team(req.body);
 
         // Save the team
@@ -68,7 +71,9 @@ router.post('/add', async (req, res) => {
 
 router.get('/my', async (req, res) => {
     try {
-        const teams = await Team.find({ manager: req.user });
+        const user = await User.findById(req.user);
+        const login = user ? user.login : null;
+        const teams = await Team.find({ manager: login });
         res.json(teams);
     } catch (error) {
         res.status(500).json({ message: 'Internal server error.' });
@@ -90,16 +95,18 @@ router.get('/all', async (req, res) => {
 
 // Сделать команду unavailable
 router.post('/unavailable', async (req, res) => {
-    const { teamId } = req.body;
 
-    if (!req.role.includes('admin')) {
-        return res.status(403).json({ isValid: false, message: 'Access denied.' });
-    }
     try {
+
+        const manager = await User.findById(req.user);
+        const team = await Team.findById(req.body._id);
         // Проверьте, существует ли команда
-        const team = await Team.findById(teamId);
         if (!team) {
-            return res.status(404).json({ isValid: false, message: 'Team not found.' });
+            throw new Error('Team not found.');
+        }
+        // Проверьте, является ли пользователь менеджером этой группы
+        if(!team.manager.includes(manager.login)) {
+          throw new Error('Access denied.');
         }
 
         // Сделайте команду недоступной
@@ -108,6 +115,7 @@ router.post('/unavailable', async (req, res) => {
 
         res.json({ isValid: true, message: 'Team is unavailable.' });
     } catch (error) {
+        res.status(500).json({ message: error.message });
         // Обработка ошибок
     }
 });
@@ -139,56 +147,57 @@ router.post('/available', async (req, res) => {
 // Обновить команду
 router.put('/update/:id', async (req, res) => {
     const teamId  = req.params.id;
-    let { userlist = [], manager = [] } = req.body;
+    const { userlist = [], manager = []} = req.body;
 
     try {
+        const [managerUser, team] = await Promise.all([
+            User.findById(req.user),
+            Team.findById(teamId)
+        ]);
+
+        //Проверить является ли пользователем ее менеджером
+        if(managerUser && !manager.includes(managerUser.login)) {
+           throw new Error('Access denied.');
+        }
+
         // Проверьте, существует ли команда
-        const team = await Team.findById(teamId);
         if (!team) {
-            return res.status(404).json({ isValid: false, message: 'Team not found.' });
+            throw new Error('Team not found.');
         }
 
-        if (userlist.length !== 0) {
-
+        let users = [];
+        if (manager.length !== 0 || manager[0] !== '') {
             // Найти пользователей по логину
-            const users = await User.find({ login: { $in: userlist } } );
+            users = await User.find({ login: { $in: userlist } } );
             if (users.length !== userlist.length) {
-                return res.status(400).json({ isValid: false, message: 'Some users do not exist.' });
+               throw new Error('Some users do not exist.');
             }
-            let userli = users.map(user => user.id);
-            req.body.userlist = userli;
         }
-        else {
-            req.body.userlist = [];
-        }
-        
-        if(!manager.length !== 0) {
+
+        let usersmanager = [];
+        if(manager.length !== 0 || manager[0] !== '') {
             // Найти менеджеров по логину
-            const usersmanager = await User.find({ login: { $in: manager } });
+            usersmanager = await User.find({ login: { $in: manager } });
             if (usersmanager.length !== manager.length) {
-                return res.status(400).json({ isValid: false, message: 'Some users manager not exist.' });
+                throw new Error('Some users manager not exist.');
             }
 
             // Найти менеджеров с userId равным User.id
             const userIds = usersmanager.map(user => user.id);
             const managers = await Manager.find({ userId: { $in: userIds } });
             if (managers.length !== userIds.length) {
-                return res.status(400).json({ isValid: false, message: 'Some users are not managers.' });
+               throw new Error('Some users are not managers.');
             }
-            req.body.manager = userIds;
-        }else {
-            req.body.manager = [];
         }
-        // Обновить команду
-        
-        await Team.findByIdAndUpdate(teamId, req.body);
 
+        // Обновить команду        
+        await Team.findByIdAndUpdate(teamId, req.body);
         res.json({ isValid: true, message: 'Team updated successfully.' });
+
     } catch (error) {
         // Обработка ошибок
         res.status(500).json({ message: error.message });
     }
 });
-
 
 module.exports = router;

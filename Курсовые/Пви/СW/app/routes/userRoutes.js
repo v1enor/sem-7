@@ -60,6 +60,31 @@ router.get('/check-token', (req, res) => {
     });
 });
 
+router.get('/check-token-id', async (req, res) => {
+    try {
+
+        const token = req.headers['authorization'].split(' ')[1];
+
+        if (!token) {
+            throw new Error('No token provided.');
+        }
+
+        jwt.verify(token, 'your-secret-key', async (err, decoded) => {
+            if (err) {
+               throw new Error('Failed to authenticate token.');
+            }
+
+            // Get the roles from the decoded token
+            const id = decoded.id;
+            const user = await User.findById(id);
+            // Return the list of token roles
+            res.json(user);
+        });}
+        catch (error) {
+            res.status(500).json({ isValid: false, message: error.message });
+        }
+});
+
 
 router.post('/admin/login', async (req, res) => {
     try {

@@ -15,6 +15,7 @@ const LeftMenu = () => {
         <a href='/signin'> <Button text="Вход" /> </a>
         <a href='/projects'> <Button text="Проекты" /> </a>
         <a href='/teams'> <Button text="Команды" /> </a>
+        <a href='/task'> <Button text="Задачи" /> </a>
         <div style={{ marginTop: '20px' }}>
         <Button text="Выход" onClick={handleLogout}  />
         </div>
