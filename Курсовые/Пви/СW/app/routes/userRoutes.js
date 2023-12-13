@@ -6,7 +6,7 @@ const Manager = require('../models/managerModel.js');
 const jwt = require('jsonwebtoken');
 
 function generateAccessToken(user) {
-    const token = jwt.sign({ id: user._id, role: user.roles }, 'your-secret-key', { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, role: user.roles }, 'your-secret-key', { expiresIn: '3d' });
     return token;
 }
 
@@ -38,7 +38,6 @@ router.post('/user', async (req, res) => {
         res.status(400).send(err.message);
     }
 });
-
 
 router.get('/check-token', (req, res) => {
     const token = req.headers['authorization'].split(' ')[1];
@@ -85,7 +84,6 @@ router.get('/check-token-id', async (req, res) => {
         }
 });
 
-
 router.post('/admin/login', async (req, res) => {
     try {
         const user = await User.findOne({ login: req.body.login });
@@ -99,7 +97,6 @@ router.post('/admin/login', async (req, res) => {
         res.status(500).send(error.message);
     }
 });
-
 
 // User login
 router.post('/login', async (req, res) => {
@@ -117,7 +114,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-
 // Get all users
 router.get('/user', async (req, res) => {
     try {
@@ -127,9 +123,6 @@ router.get('/user', async (req, res) => {
         res.status(400).send(err);
     }
 });
-
-
-
 
 // Get a user by id
 router.get('/:userId', async (req, res) => {

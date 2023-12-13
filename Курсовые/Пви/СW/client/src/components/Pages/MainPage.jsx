@@ -8,10 +8,10 @@ const MainPage = () => {
 
   return (
     <>
-    <div className='MainPage'>
-      <LeftMenu />
-      <MainContainer />
-    </div>
+      <div className='MainPage'>
+        <LeftMenu />
+        <MainContainer />
+      </div>
     </>
   );
 }

@@ -24,9 +24,7 @@ router.post('/time', (req, res) => {
     .catch(error => {
       res.status(500).json({ message: error.message }); // Обработка ошибок
     });
-
 });
 
 // Другие маршруты и их обработчики
-
 module.exports = router;

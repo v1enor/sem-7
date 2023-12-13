@@ -35,31 +35,40 @@ const AllTask = (user) => {
 
     const tasksByProjectId = tasks.reduce((acc, task) => {
         if (!acc[task.projectId]) {
-            acc[task.projectId] = [];
+            acc[task.projectId] = {
+                projectId: task.projectId,
+                projectTitle: task.projectTitle,
+                tasks: []
+            };
         }
-        acc[task.projectId].push(task);
+        acc[task.projectId].tasks.push(task);
         return acc;
     }, {});
-
 
     const tasksByUserId = tasks.filter(task => task.assignedTo === user.user.login);
 
     return (
         <div id='TaskList'>
             <h2>Задачи</h2>
-            {Object.entries(tasksByProjectId).map(([projectId, tasks]) => (
-                <div key={projectId}>
-                    <h2>Project ID: {projectId}</h2>
-                    {tasks.map(task => (
-                        <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="all"/>
-                    ))}
-                </div>
+            {Object.entries(tasksByProjectId).map(([projectId, projectData]) => (
+            <div key={projectId}>
+                <h2>Проект ID: {projectId} Название: {projectData.projectTitle} </h2>
+                {projectData.tasks.map(task => (
+                    <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="all"/>
+                ))}
+            </div>
             ))}
+        
 
             <h2>Мои задачи</h2>
-            {tasksByUserId.map(task => (
-                <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="all"/>
-            ))}
+            {Object.entries(tasksByProjectId).map(([projectId, projectData]) => (
+            <div key={projectId}>
+                <h2>Проект ID: {projectId} Название: {projectData.projectTitle} </h2>
+                {projectData.tasks.filter(task => task.assignedTo === user.user.login).map(task => (
+                    <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="my"/>
+                ))}
+    </div>
+))}
         </div>
     );
 };

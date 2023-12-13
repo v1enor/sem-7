@@ -4,6 +4,7 @@ import UserRow from './UserRow';
 import AlertForm from '../Alert/AlertForm';
 import './AdminContent.css';
 import '../../components/Alert/Alert.css'
+
 const AdminContent = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -33,15 +34,15 @@ const AdminContent = () => {
 
     return (
         <>
-        <div id='admin-header'>
-            <h2>Пользователи</h2>
-            <AlertForm />
-            <button onClick={handleLogout}>Выйти</button>
-        </div>
-        <div className='users'>
-            {users && users.map(user => <UserRow key={user._id} user={user} />)}
-        </div>
-        </>  
+            <div id='admin-header'>
+                <h2>Пользователи</h2>
+                <AlertForm />
+                <button onClick={handleLogout}>Выйти</button>
+            </div>
+            <div className='users'>
+                {users && users.map(user => <UserRow key={user._id} user={user} />)}
+            </div>
+        </>
     );
 };
 

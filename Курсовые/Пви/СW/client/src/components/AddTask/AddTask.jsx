@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import './AddTask.css';
+import {getProjects} from '../../services/apiProjects';
 
 const AddTask = () => {
     const [inputValue, setInputValue] = useState('');
     const [isRunning, setIsRunning] = useState(false);
     const [timer, setTimer] = useState(0);
     const [isSendDisabled, setIsSendDisabled] = useState(true);
+    const [projects, setProjects] = useState([]);
+    const [timerStart, setTimerStart] = useState(0);
+    useEffect(() => async () =>{
+        // Fetch projects from the database
+        let affa = await getProjects();
+        
+        setProjects(affa.map((project) => ({
+            id: project.__v,
+            name: project.title,
+            title: project.title,
+        })));
+    }, []);
 
     useEffect(() => {
         let interval;
@@ -33,6 +46,7 @@ const AddTask = () => {
     };
 
     const handleButtonClick = () => {
+
         setIsRunning((prevIsRunning) => !prevIsRunning);
         if (!isRunning) {
             handleSendButtonClick();
@@ -52,15 +66,26 @@ const AddTask = () => {
                 value={inputValue}
                 onChange={handleInputChange}
                 placeholder="Над чем вы работаете? "
-                
             />
+            <select>
+                {projects.map((project) => (
+                    <option key={project.id} value={project.id}>
+                        {project.title}
+                    </option>
+                ))}
+            </select>
             <button onClick={handleButtonClick} disabled={isButtonDisabled}>
                 {isRunning ? 'Stop' : 'Start'}
             </button>
-            {timer !== 0 && <button onClick={handleSendButtonClick} disabled={isSendDisabled}>Send</button>}
+            {timer !== 0 && (
+                <button onClick={handleSendButtonClick} disabled={isSendDisabled}>
+                    Send
+                </button>
+            )}
             <p>Timer: {formatTime(timer)}</p>
         </div>
     );
 };
 
 export default AddTask;
+

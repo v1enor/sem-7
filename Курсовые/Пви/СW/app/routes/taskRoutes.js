@@ -32,7 +32,6 @@ router.use(checkToken);
 router.post('/add', async (req, res) => {
 });
 
-
 router.post('/create', async (req, res) => {
     try {
         //проверка на существование проекта
@@ -56,12 +55,20 @@ router.post('/create', async (req, res) => {
     }
 });
 
-
 router.get("/my", async (req, res) => {
     try {
         const user = await User.findById(req.user);
         const manager = await Manager.findOne({userId: user.id});
-        const tasks = await Task.find({projectId: { $in: manager.projects } });
+        let tasks = await Task.find({projectId: { $in: manager.projects } });
+        const projects = await Project.find({ _id: { $in: manager.projects } });
+        tasks = tasks.map(task => {
+            const project = projects.find(project => project.id === task.projectId);
+            return {
+                ...task._doc,
+                projectTitle: project.title,
+                projectDescription: project.description
+            };
+        });
         res.status(200).json(tasks);
     } catch (error) {
         res.status(500).json({error: error.message });
@@ -69,7 +76,7 @@ router.get("/my", async (req, res) => {
 
 });
 
-
+//set task taken
 router.put('/update/:id', async (req, res) => {
     try {
         const taskId = req.params.id;
@@ -81,6 +88,27 @@ router.put('/update/:id', async (req, res) => {
         
         task.status = 'taken';
         task.assignedTo = user.login;
+        
+        await task.save();
+        
+        res.status(200).json(task);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+//set task taken
+router.put('/unset/:id', async (req, res) => {
+    try {
+        const taskId = req.params.id;
+        const task = await Task.findById(taskId);
+      
+        if (!task) {
+            throw new Error('Task not found');
+        }
+        
+        task.status = 'awaiting';
+        task.assignedTo = null;
         
         await task.save();
         

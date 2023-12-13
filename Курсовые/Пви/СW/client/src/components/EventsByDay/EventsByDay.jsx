@@ -17,7 +17,7 @@ const EventsByDay = ({ events }) => {
                 const formattedDate = new Date(date);
                 const dayName = formattedDate.toLocaleDateString('ru-RU', { weekday: 'long' });
                 return (
-                    <div class="dayivents"  key={index}>
+                    <div class="dayivents" key={index}>
                         <h2>День: {date} - {dayName}</h2>
                         {eventsByDate[date].map((event, index) => (
                             <Input key={index} event={event} />

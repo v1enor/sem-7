@@ -24,7 +24,10 @@ function checkToken(req, res, next) {
         next();
     });
 }
+
 router.use(checkToken);
+
+
 
 router.get('/manager', async (req, res) => {
     try {

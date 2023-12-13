@@ -9,6 +9,7 @@ const managerRoutes = require('./routes/managerRoutes.js');
 const projectsRoutes = require('./routes/projectsRoutes.js');
 const teamRoutes = require('./routes/teamRoutes.js');
 const taskRoutes = require('./routes/taskRoutes.js');
+const eventRoutes = require('./routes/eventRoutes.js')
 
 require('dotenv').config(); // Загрузка переменных окружения из файла .env
 
@@ -36,7 +37,7 @@ app.use('/manager', managerRoutes);
 app.use('/project', projectsRoutes);
 app.use('/team', teamRoutes);
 app.use('/task', taskRoutes);
-
+app.use('/event', eventRoutes )
 // Пример корневого маршрута для проверки работы сервера
 app.get('/', (req, res) => {
   res.send('Сервер работает!');

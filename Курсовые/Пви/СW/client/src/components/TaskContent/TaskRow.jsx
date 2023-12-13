@@ -1,5 +1,5 @@
 import React from 'react';
-import { setTaskMy } from '../../services/apiTask';
+import { setTaskMy,unsetTaskMy } from '../../services/apiTask';
 
 const handleAddToMyTasks = (task, onTaskUpdate) => {
     setTaskMy(task)
@@ -13,7 +13,16 @@ const handleAddToMyTasks = (task, onTaskUpdate) => {
 };
 
 
-const handleRemoveFromMyTasks = (task) => {
+const handleRemoveFromMyTasks = (task, onTaskUpdate) => {
+    unsetTaskMy(task)
+    .then(data => {
+        console.log(data);
+        onTaskUpdate();
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
 };
 
 const TaskRow = ({ task, type, onTaskUpdate }) => {
@@ -25,9 +34,9 @@ const TaskRow = ({ task, type, onTaskUpdate }) => {
                     <p><strong>Project ID:</strong> {task.projectId}</p>
                     <p><strong>Status:</strong> {task.status}</p>
                     <p><strong>Description:</strong> {task.description}</p>
-                    <p><strong>ID:</strong> {task.id}</p>
-                    {type === 'all' && <button onClick={() => handleAddToMyTasks(task, onTaskUpdate)}>Add to My Tasks</button>}
-                    {type === 'my' && <button onClick={() => handleRemoveFromMyTasks(task)}>Remove from My Tasks</button>}
+                    <p><strong>ID:</strong> {task._id}</p>
+                    {type === 'all'&& task.status !== 'taken' && <button onClick={() => handleAddToMyTasks(task, onTaskUpdate)}>Add to My Tasks</button>}
+                    {type === 'my' && <button onClick={() => handleRemoveFromMyTasks(task, onTaskUpdate)}>Remove from My Tasks</button>}
             </div>
         </div>
     );
