@@ -1,15 +1,17 @@
 input {
     border: 2px solid #000;
+    box-sizing: border-box;
     padding: 7px;
+
     background: #FFF;
     margin-right: 5px;
     outline: none; /* Remove the default outline */ 
     box-shadow: none; /* Remove the defa    ult box shadow */
-    height: 20px;
 }
 
 input[type="time"]{
     width: auto;
+    
 }
 
 button[type="submit"]{
@@ -28,7 +30,7 @@ input:focus {
 #usersivents{
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
 }
 
@@ -39,7 +41,10 @@ button {
     display: inline-flex;
     padding: 2px 20px;
     background: #FFF;
-    margin: 2px;
+   
+    box-sizing: border-box;
+    margin: 0px 2px;
+    /* height: 38px; */
 }
 
 button:hover {
@@ -53,4 +58,9 @@ button:active {
 
 .div-event-part{
     display: flex;
+}
+
+.dateevent{
+    display: flex;
+    align-items: center;
 }

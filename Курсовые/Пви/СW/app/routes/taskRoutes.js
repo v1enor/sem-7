@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 const User = require('../models/userModel.js');
-const Team = require('../models/teamModel.js');
 const Manager = require('../models/managerModel.js');
 const jwt = require('jsonwebtoken');
 const Task = require('../models/taskModel.js');
+const Team = require('../models/teamModel.js');
 const Project = require('../models/projectModel.js');
+const taskModel = require('../models/taskModel.js');
 
 function checkToken(req, res, next) {
     const token = req.headers['authorization'].split(' ')[1];
@@ -28,9 +28,6 @@ function checkToken(req, res, next) {
 }
 
 router.use(checkToken);
-
-router.post('/add', async (req, res) => {
-});
 
 router.post('/create', async (req, res) => {
     try {
@@ -59,8 +56,8 @@ router.get("/my", async (req, res) => {
     try {
         const user = await User.findById(req.user);
         const manager = await Manager.findOne({userId: user.id});
-        let tasks = await Task.find({projectId: { $in: manager.projects } });
         const projects = await Project.find({ _id: { $in: manager.projects } });
+        let tasks = await Task.find({projectId: { $in: projects } });
         tasks = tasks.map(task => {
             const project = projects.find(project => project.id === task.projectId);
             return {
@@ -76,6 +73,51 @@ router.get("/my", async (req, res) => {
 
 });
 
+router.get("/byproject", async (req, res) => {
+    try {
+        const user = await User.findById(req.user);
+        const team = await Team.find({ userlist: user.login });
+        const projects = await Project.find({ teamslist: team._id });
+        let tasks = await Task.find({projectId: { $in: projects } });
+        tasks = tasks.map(task => {
+            const project = projects.find(project => project.id === task.projectId);
+            return {
+                ...task._doc,
+                projectTitle: project.title,
+                projectDescription: project.description
+            };
+        });
+        res.status(200).json(tasks);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+);
+
+router.post('/upload/:id', async (req, res) => {
+    try {
+        const project = await Project.findById(req.body.projectId);
+        if (!project) throw new Error('Проект не найден');
+
+        //Проверка является ли пользователь менеджером этого проекта
+        const user = await User.findById(req.user);
+        const manager = await Manager.findOne({ userId: user.id, projects: { $in: [req.body.projectId] } });
+        if (!manager) throw new Error('Вы не являетесь менеджером этого проекта');
+        
+        // Save the task to the database
+
+        let task = await Task.findById(req.params.id);
+        if (!task) throw new Error('Задача не найдена');
+        task.title = req.body.title;
+        task.description = req.body.description;
+        task.projectId = req.body.projectId;
+        await task.save();
+        res.status(201).json({ success: true });
+        
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
 //set task taken
 router.put('/update/:id', async (req, res) => {
     try {
@@ -97,6 +139,7 @@ router.put('/update/:id', async (req, res) => {
     }
 });
 
+
 //set task taken
 router.put('/unset/:id', async (req, res) => {
     try {
@@ -109,6 +152,27 @@ router.put('/unset/:id', async (req, res) => {
         
         task.status = 'awaiting';
         task.assignedTo = null;
+        
+        await task.save();
+        
+        res.status(200).json(task);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+
+router.put('/finish/:id', async (req, res) => {
+    try {
+        const taskId = req.params.id;
+        const task = await Task.findById(taskId);
+      
+        if (!task) {
+            throw new Error('Task not found');
+        }
+        
+        task.status = 'finished';
+ 
         
         await task.save();
         

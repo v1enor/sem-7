@@ -17,3 +17,7 @@
 .left-menu a {
     opacity: 1;
 }
+
+.left-menu  {
+   margin-right: 10px;
+}

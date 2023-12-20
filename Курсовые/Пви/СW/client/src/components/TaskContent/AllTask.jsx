@@ -1,15 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import TaskRow from './TaskRow';
-import { getTask } from '../../services/apiTask';
+import { getTask, getTaskByProjects } from '../../services/apiTask';
+import { getProjects } from '../../services/apiProjects';
+
 
 const AllTask = (user) => {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
- 
+    const [alltasks, setAllTasks] = useState([]);
+    const [projectmanlist, setprojectmanlist] = useState([]);
+
     useEffect(() => {
-        getTask()
+        getTaskByProjects()
             .then(data => {
                 setTasks(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                setLoading(false);
+            });
+        getTask()
+            .then(data => {
+                setAllTasks(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                setLoading(false);
+            });
+        getProjects()
+            .then(data => {
+                setprojectmanlist(data);
                 setLoading(false);
             })
             .catch(error => {
@@ -20,12 +42,23 @@ const AllTask = (user) => {
 
     const handleTaskUpdate = () => {
         // Здесь вы можете повторно вызвать getTask для обновления списка задач
-        getTask()
+        getTaskByProjects()
             .then(data => {
                 setTasks(data);
+                setLoading(false);
             })
             .catch(error => {
                 console.error(error);
+                setLoading(false);
+            });
+        getTask()
+            .then(data => {
+                setAllTasks(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                setLoading(false);
             });
     };
 
@@ -45,30 +78,55 @@ const AllTask = (user) => {
         return acc;
     }, {});
 
-    const tasksByUserId = tasks.filter(task => task.assignedTo === user.user.login);
+
+    const finishedTask = alltasks.filter(task => task.status === 'finished');
+    const userTask = tasks.filter(task => task.assignedTo === user.user.login).filter(task => task.status !== 'finished');
+    const unassignedTask = tasks.filter(task => task.status !== 'finished');
+
+    if (unassignedTask.length <= 0 && userTask.length <= 0 && finishedTask.length <= 0) {
+        return <div>Нет объектов!</div>;
+    }
 
     return (
         <div id='TaskList'>
-            <h2>Задачи</h2>
-            {Object.entries(tasksByProjectId).map(([projectId, projectData]) => (
-            <div key={projectId}>
-                <h2>Проект ID: {projectId} Название: {projectData.projectTitle} </h2>
-                {projectData.tasks.map(task => (
-                    <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="all"/>
-                ))}
-            </div>
-            ))}
-        
 
-            <h2>Мои задачи</h2>
-            {Object.entries(tasksByProjectId).map(([projectId, projectData]) => (
-            <div key={projectId}>
-                <h2>Проект ID: {projectId} Название: {projectData.projectTitle} </h2>
-                {projectData.tasks.filter(task => task.assignedTo === user.user.login).map(task => (
-                    <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="my"/>
-                ))}
-    </div>
-))}
+            {unassignedTask.length > 0 && <h2>Задачи</h2> && (
+                Object.entries(tasksByProjectId).map(([projectId, projectData]) => (
+                    <div key={projectId}>
+                        <h2>Проект ID: {projectId} Название: {projectData.projectTitle} </h2>
+                    {unassignedTask.map(task => (
+                        <TaskRow isEdit={projectmanlist.some(project => project._id === projectId)} 
+                            key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="all" />
+                    ))}
+                </div>
+            ))
+            )}
+
+
+
+            {userTask.length > 0 && <h2> Мои задачи</h2> && (
+                Object.entries(tasksByProjectId).map(([projectId, projectData]) => (
+                    <div key={projectId}>
+                        <h2>Проект ID: {projectId} Название: {projectData.projectTitle} </h2>
+                    {userTask.map(task => (
+                        <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="my" />
+                    ))}
+                </div>
+            ))
+            )}
+
+
+            {finishedTask.length > 0 && (
+                <>
+                    <h2>Завершенные задачи</h2>
+                    {finishedTask.map(task => (
+                        <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="finished" />
+                    ))}
+                </>
+            )}
+
+            
+
         </div>
     );
 };

@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    height: 10%;
     gap: 16px;
     align-self: stretch;
     order: -1;

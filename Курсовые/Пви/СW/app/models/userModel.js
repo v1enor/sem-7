@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 require('dotenv').config(); 
@@ -7,37 +7,32 @@ const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS);
 
 
 const userSchema = new mongoose.Schema({
- 
   login: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
-  teams: [{
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'teams'
-  }],
   status: {
     type: String,
-    default: 'active'  
+    default: "active",
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   roles: {
-    type: [String], 
-    default: ['user']
-  }
+    type: [String],
+    default: ["user"],
+  },
 });
 
 // Прежде чем сохранить пользователя, хешируем пароль

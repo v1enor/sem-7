@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../models/userModel.js');
 const Manager = require('../models/managerModel.js');
 const Project = require('../models/projectModel.js');
-const Team = require('../models/teamModel.js');
+const Team = require("../models/teamModel.js");
 const jwt = require('jsonwebtoken');
 
 function checkToken(req, res, next) {
@@ -129,6 +129,20 @@ router.get('/manager', async (req, res) => {
             return res.status(404).json({ message: 'Manager not found.' });
         }
         const projects = await Project.find({ _id: { $in: manager.projects } });
+        res.json(projects);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
+
+//get project by user id
+router.get('/user', async (req, res) => {
+    try {
+        const user = await User.findById(req.user);
+        let log = user.login;
+        const team = await Team.find({ userlist: log });
+        const projects = await Project.find({ teamslist: team._id });
         res.json(projects);
     } catch (error) {
         res.status(500).json({ message: 'Internal server error.' });

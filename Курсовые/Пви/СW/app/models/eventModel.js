@@ -21,6 +21,11 @@ const eventsSchema = new Schema({
         default: "",
         ref: 'Team'
     },
+    status: {
+        type: String,
+        default: "active",
+        required: true
+    },
     startTime: {
         type: Date,
         default: Date.now,

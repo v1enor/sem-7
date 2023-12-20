@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../models/userModel.js');
 const Project = require('../models/projectModel.js');
 const Manager = require('../models/managerModel.js');
 const jwt = require('jsonwebtoken');
-const Team = require('../models/teamModel.js');
+const Team = require("../models/teamModel.js").default;
 
 function checkToken(req, res, next) {
     const token = req.headers['authorization'].split(' ')[1];

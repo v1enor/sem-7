@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { updateTeam } from '../../services/apiTeams';
 import { setstatus } from '../../services/apiTeams';
 import Alert from '../Alert/Alert';
-const TeamRow = ({ team }) => {
+const TeamRow = ({ team, readOnly }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [updatedTeam, setUpdatedTeam] = useState(team);
 
@@ -70,30 +70,55 @@ const TeamRow = ({ team }) => {
     };
 
     return (
-        <div key={team._id}>
+        <div class="projectrow" key={team._id}>
+            <div>
+
             <label>Id:</label>
             <input type="text" defaultValue={team._id} readOnly size={3} />
+            </div>
+            <div>
+
             <label>Название:</label>
-            <input type="text" size={10} defaultValue={team.title} onChange={(event) => handleChange(event, 'title')} readOnly={!isEditing} />
+            <input type="text"defaultValue={team.title} size={14} onChange={(event) => handleChange(event, 'title')} readOnly={!isEditing} />
+            </div>
+
+
+            <div>
+
             <label>Описание:</label>
-            <input type="text"  size={10} defaultValue={team.description} onChange={(event) => handleChange(event, 'description')} readOnly={!isEditing} />
+            <input type="text" defaultValue={team.description} onChange={(event) => handleChange(event, 'description')} readOnly={!isEditing} />
+            </div>
+
+            <div>
+
             <label>Статус:</label>
-            <input type="text" size={10} defaultValue={team.status} onChange={(event) => handleChange(event, 'status')} readOnly={!isEditing} />
+            <input type="text" size={8} defaultValue={team.status} onChange={(event) => handleChange(event, 'status')} readOnly={!isEditing} />
+            </div>
+            <div>
+
             <label>Пользователи</label>
-            <input type="text" size={10} 
+            <input type="text"
                 defaultValue={team.userlist ? team.userlist.join(', ') : ''} 
                 onChange={(event) => handleChange(event, 'userlist')} 
                 readOnly={!isEditing} />
+
+            </div>
+            
+            <div>
 
             <label>Менеджеры</label>
             <input type="text" size={10} 
                 defaultValue={team.manager ? team.manager.join(', ') : ''} 
                 onChange={(event) => handleChange(event, 'manager')} 
                 readOnly={!isEditing} />
-            {!isEditing && <button onClick={handleEdit}>Edit</button>}
-            {isEditing && <button onClick={handleSave}>Save</button>}
-            {isEditing && <button onClick={handleComplete}>Complete</button>}
-            {isEditing && <button onClick={() => setIsEditing(false)}>Cancel</button>}
+            </div>
+            <div class="savebtn">
+
+            {!isEditing && !readOnly && <button onClick={handleEdit}>Изменить</button>}
+            {isEditing && <button onClick={handleSave}>Сохранить</button>}
+            {isEditing && <button onClick={handleComplete}>Готов!</button>}
+            {isEditing && <button onClick={() => setIsEditing(false)}>Отмена</button>}
+            </div>
         
         </div>
     );

@@ -20,6 +20,7 @@ const saveAsPDF = () => {
             pdf.save("download.pdf"); 
         });
 }
+
 async function getDataEvent() {
     const data = await getEvents();
 
@@ -85,4 +86,5 @@ const StatContainer = () => {
         </div>
     );
 };
+   
 export default StatContainer;

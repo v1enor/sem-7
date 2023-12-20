@@ -1,14 +1,94 @@
-#createProject{
+#createProject {
     height: fit-content;
 }
 
+#ProjectPage {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
 
+#ProjectTop {
+    display: flex;
+   
+    flex-direction: row;
+}
+
+#ProjectTop button {
+    width: 250px;
+
+    margin: 0 2px;
+    text-align: center; /* Added to center the text */
+
+ 
+ align-items: center;
+}
 #ProjectPage h2 {
-    margin: 2px;
+    margin: 0;
     padding-left: 5px;
     background-color: bisque;
     border: 2px solid #000;
     width: 100%;
+   
+    align-content: center;
+}
+
+#ProjectContent {
+    margin-top: 20px;
+    border: 2px solid #000;
+    padding: 2px;
+}
+
+.projectrow  {
+    margin:  2px 0;
+    border: 2px;
+    display: flex;
+    align-items: center;
+}
+
+.savebtn{
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 0px;
+    width: 15%;
+    align-items: stretch;
+}
+
+.input-box {
+    /* родительский блок относительно которого будем формировать положение
+    тега label */
+    position: relative;
+  }
+
+
+  #createProject{
+    height: fit-content;
+}
+
+#TaskList {
+    width: 100%;
+}
+
+#ProjectContent
+{
+    display: flex;
+    flex-direction: column;
+}
+
+#ProjectContent h2 {
+    width: auto;
+}
+
+
+#TaskList h2 {
+    margin: 2px 0;
+    background-color: bisque;
+    border: 2px solid #000;
     height: auto;
 }
 
+#ProjectContent div {
+    margin: 2px ;
+}
