@@ -36,7 +36,7 @@ router.post('/add', async (req, res) => {
 
         const user = await User.findById(req.user);
         if (!user) throw new Error("Нет такого пользователя!");
-
+        
         if (projectid !== "") {
             const project = await Project.findById(projectid)
             if (!project) throw new Error("Нет такого проекта!");
@@ -48,7 +48,7 @@ router.post('/add', async (req, res) => {
             const isUserInTeam = team.project.includes(user.login);
             if (!isUserInTeam) throw new Error("Пользователь не является членом команды!");
         }
-
+        req.body.userId = req.user;
         const event = new Event(req.body);
         await event.save();
         res.status(200).json("Успешно создан!")
@@ -67,7 +67,6 @@ router.get("/my", async (req, res) => {
     }
 
 });
-
 
 router.put("/update/:id", async (req, res) => {
     try {

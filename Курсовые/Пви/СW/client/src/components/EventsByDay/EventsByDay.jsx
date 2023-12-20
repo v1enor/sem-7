@@ -3,7 +3,7 @@ import Input from "../Form/Form";
 import './EventsByDay.css';
 const EventsByDay = ({ events }) => {
     const eventsByDate = events.reduce((groups, event) => {
-        const date = event.date;
+        const date = event.startTime.split('T')[0];
         if (!groups[date]) {
             groups[date] = [];
         }

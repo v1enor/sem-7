@@ -40,3 +40,25 @@ export function updateEvent(event) {
         throw new Error(error.message);
     });
 }
+
+export function createEvent(event) {
+    return fetch(`${API_URL}/event/add`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify(event)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.message);
+            }
+
+            return response.json();
+        })
+        .catch(error => {
+            // Handle any errors
+            throw new Error(error.message);
+        });
+}
