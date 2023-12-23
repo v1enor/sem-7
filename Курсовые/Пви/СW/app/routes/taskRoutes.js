@@ -57,7 +57,8 @@ router.get("/my", async (req, res) => {
         const user = await User.findById(req.user);
         const manager = await Manager.findOne({userId: user.id});
         const projects = await Project.find({ _id: { $in: manager.projects } });
-        let tasks = await Task.find({projectId: { $in: projects } });
+        let tasks = await Task.find({ projectId: { $in: projects } });
+        if (!tasks) return;
         tasks = tasks.map(task => {
             const project = projects.find(project => project.id === task.projectId);
             return {

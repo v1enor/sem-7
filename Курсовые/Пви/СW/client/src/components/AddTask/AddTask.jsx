@@ -33,23 +33,13 @@ const AddTask = ({setEvents}) => {
         try {
             affa = await getProjects();
         } catch (error) {
-            Alert.fire({
-                title: 'Ошибка!',
-                text: 'Ошибка получения проектов!\n' + error.message,
-                icon: 'error',
-                confirmButtonText: 'Ок',
-            });
+            console.log();
         }
         let tasks = [];
         try {
             tasks = await getTask();
         } catch (error) {
-            Alert.fire({
-                title: 'Ошибка!',
-                text: 'Ошибка получения задач!\n' + error.message,
-                icon: 'error',
-                confirmButtonText: 'Ок',
-            });
+            console.log();
         };
         setProjects(affa.map((project) => ({
             id: project.__v,

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './Form.css';
-import { updateEvent, archiveEvent, activeEvent } from '../../services/apiEvents';
+import { updateEvent, archiveEvent, activeEvent, getEvents } from '../../services/apiEvents';
+
 import Alert from '../../components/Alert/Alert';
 
-const Input = ({ event,  status }) => {
+const Input = ({ event, status, setEvents }) => {
 
     const [updatedEvent, setUpdatedEvent] = useState(event);
 
@@ -58,12 +59,21 @@ const Input = ({ event,  status }) => {
     const handleArchive = () => {
         archiveEvent(updatedEvent)
             .then((data) => {
+
                 Alert.fire({
                     title: 'Успешно!',
                     text: 'Событие успешно архивирована!',
                     icon: 'success',
                     confirmButtonText: 'Ок',
                 })
+                getEvents()
+                .then((data) => {
+                    setEvents(data);
+                })
+                .catch((error) => {
+                   
+                    console.log(error);
+                });
             })
             .catch((error) => {
                 Alert.fire({
@@ -84,6 +94,14 @@ const Input = ({ event,  status }) => {
                     icon: 'success',
                     confirmButtonText: 'Ок',
                 })
+                getEvents()
+                .then((data) => {
+                    setEvents(data);
+                })
+                .catch((error) => {
+                   
+                    console.log(error);
+                });
             })
             .catch((error) => {
                         Alert.fire({

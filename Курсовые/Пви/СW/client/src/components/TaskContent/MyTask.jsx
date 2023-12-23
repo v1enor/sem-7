@@ -41,7 +41,7 @@ const MyTask = () => {
 
     return (
         <div id='MyTaskList'>
-            <h2>Мои задачи</h2>
+            <h2 >Мои задачи</h2>
             {Object.entries(tasksByProjectId).map(([projectId, tasks]) => (
                 <div key={projectId}>
                     <h2>Project ID: {projectId}</h2>

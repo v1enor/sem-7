@@ -67,25 +67,38 @@ const ProjectRow = ({ project, readonly}) => {
     };
 
     return (
-        <div key={project._id}>
-            <label>Id:</label>
-            <label>Название:</label>
-            <input type="text" defaultValue={project._id} readOnly size={3} />
-            <input type="text" size={10} defaultValue={project.title} onChange={(event) => handleChange(event, 'title')} readOnly={!isEditing} />
+        <div class="projectrow" key={project._id}>
+            <div>
+
+                <label>Id:</label>
+            <input type="text" defaultValue={project._id} readOnly size={5} />
+            </div>
+            <div>
+
+                <label>Название:</label>
+            <input type="text" size={20} defaultValue={project.title} onChange={(event) => handleChange(event, 'title')} readOnly={!isEditing} />
+            </div>
+            <div>
             <label>Описание:</label>
-            <input type="text"  size={10} defaultValue={project.description} onChange={(event) => handleChange(event, 'description')} readOnly={!isEditing} />
+            <input type="text"  size={20} defaultValue={project.description} onChange={(event) => handleChange(event, 'description')} readOnly={!isEditing} />
+            </div>
+            <div>
             <label>Статус:</label>
-            <input type="text" size={10} defaultValue={project.status} onChange={(event) => handleChange(event, 'status')} readOnly={!isEditing} />
-            <label>Команды</label>
-            <input type="text" size={10} 
+            <input type="text" size={15} defaultValue={project.status} onChange={(event) => handleChange(event, 'status')} readOnly={!isEditing} />
+            </div>
+            <div>
+                <label>Команды</label>
+            <input type="text" size={15} 
                 defaultValue={project.teamlist ? project.teamlist.join(', ') : ''} 
                 onChange={(event) => handleChange(event, 'teamlist')} 
                 readOnly={!isEditing} />
-            {!isEditing && !readonly && <button onClick={handleEdit}>Edit</button>}
-            {isEditing && <button onClick={handleSave}>Save</button>}
-            {isEditing && <button onClick={handleComplete}>Complete</button>}
-            {isEditing && <button onClick={() => setIsEditing(false)}>Cancel</button>}
-        
+            </div>
+            <div class="savebtn">
+                {!isEditing && !readonly && <button onClick={handleEdit}>Edit</button>}
+                {isEditing && <button onClick={handleSave}>Save</button>}
+                {isEditing && <button onClick={handleComplete}>Complete</button>}
+                {isEditing && <button onClick={() => setIsEditing(false)}>Cancel</button>}
+            </div>
         </div>
     );
 };

@@ -35,7 +35,7 @@ const MainContainer = () => {
     return (
         <div className='mainContainer'>
             <AddTask setEvents={setEvents} />
-            <EventsByDay events={events} />
+            <EventsByDay events={events} setEvents={setEvents}/>
 
         </div>
 

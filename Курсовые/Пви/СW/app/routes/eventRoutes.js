@@ -56,7 +56,10 @@ router.post('/add', async (req, res) => {
 router.get("/my", async (req, res) => {
     try {
         const events = await Event.find({ userId: req.user });
-        res.status(200).json(events);
+        if (!events) res.status(200);
+        else {
+            res.status(200).json(events);
+        }
     } catch (error) {
         res.status(500).json({error: error.message });
     }

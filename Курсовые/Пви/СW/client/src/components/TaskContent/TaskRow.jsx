@@ -71,28 +71,45 @@ const TaskRow = ({ task, type, onTaskUpdate, isEdit }) => {
 
 
     return (
-        <div className='projectInfo'>
+
             
             <div key={task.id}  className='projectInfo'>
-    
-                <strong>Проект ID:</strong>
-                <input type="text" defaultValue= {task.projectId} readOnly size={10} />
+            <div>
+                <strong>Проект:</strong>
+                <input type="text" defaultValue={task.projectId} readOnly size={3} />
+            </div>
+            <div>
+
+                <strong>Название</strong>
+                <input type="text" defaultValue={task.title} readOnly size={10} />
+            </div>
+            <div>
                 <strong>Статус:</strong> 
-                <input type="text" defaultValue= {task.status} readOnly size={10} />
-                   
+
+                <input type="text" defaultValue={task.status} readOnly size={5} />
+            </div>
+            <div>
+
                 <strong>Описание:</strong> 
-                <input type="text" defaultValue={task.description} size={10}
+            </div>
+            <div>
+            <input type="text" defaultValue={task.description} readOnly={!isEdit} size={10}
                 onChange={(event) => handleChange(event, 'description')} />
-                   
+            </div>  
+            <div>
                 <strong>Назначена:</strong> 
-                <input type="text" defaultValue= {task.assignedTo}  readOnly size={10} />
+                <input type="text" defaultValue={task.assignedTo} readOnly size={6} />
+            </div>
+            <div id="btn">
+
                     {type === 'all'&& task.status !== 'taken' && <button onClick={() => handleAddToMyTasks(task, onTaskUpdate)}>В мои задачи</button>}
                     {type === 'my' && <button onClick={() => handleRemoveFromMyTasks(task, onTaskUpdate)}>Убрать из задач</button>}
                     {type === 'my' && <button onClick={() => handleFinishTask(task, onTaskUpdate)}>Закончить</button>}
-                     {type === 'finished' && <button onClick={() => handleRemoveFromMyTasks(task, onTaskUpdate)}>А назад ее</button>}
-                    {isEdit && <button onClick={() => handleUpadte(task, onTaskUpdate)}>Ред</button>}
+                    {type === 'finished' && <button onClick={() => handleRemoveFromMyTasks(task, onTaskUpdate)}>А назад ее</button>}
+                {isEdit && <button onClick={() => handleUpadte(task, onTaskUpdate)}>Редактировать</button>}
             </div>
         </div>
+
     );
 };
 

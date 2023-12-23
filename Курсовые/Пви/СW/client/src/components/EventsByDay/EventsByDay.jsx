@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from "../Form/Form";
 import './EventsByDay.css';
-const EventsByDay = ({ events }) => {
+const EventsByDay = ({ events, setEvents }) => {
     const eventsByStatusAndDate = events.reduce((groups, event) => {
         const date = event.startTime.split('T')[0];
         const status = event.status;
@@ -28,7 +28,7 @@ const EventsByDay = ({ events }) => {
                 const dates = Object.keys(eventsByStatusAndDate[status]);
                 return (
                     <div className={status} key={status}>
-                        <h2>{status}</h2>
+                        <h2>{status === "archive" ? "Архивировано" : "Активные"}</h2>
                         {dates.map((date, index) => {
                             const formattedDate = new Date(date);
                             const dayName = formattedDate.toLocaleDateString('ru-RU', { weekday: 'long' });
@@ -36,7 +36,7 @@ const EventsByDay = ({ events }) => {
                                 <div className="dayivents" key={index}>
                                     <h2>День: {date} - {dayName}</h2>
                                     {eventsByStatusAndDate[status][date].map((event, index) => (
-                                        <Input key={index} event={event} status={status} />
+                                        <Input key={index} event={event} status={status} setEvents={setEvents} />
                                     ))}
                                 </div>
                             );

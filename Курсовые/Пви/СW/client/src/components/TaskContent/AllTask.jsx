@@ -89,44 +89,53 @@ const AllTask = (user) => {
 
     return (
         <div id='TaskList'>
+            <h2 id="taskH">Задачи</h2>    
+            <div class="Task">
 
-            {unassignedTask.length > 0 && <h2>Задачи</h2> && (
+            {unassignedTask.length > 0  && (
                 Object.entries(tasksByProjectId).map(([projectId, projectData]) => (
                     <div key={projectId}>
                         <h2>Проект ID: {projectId} Название: {projectData.projectTitle} </h2>
-                    {unassignedTask.map(task => (
+                    {projectData.tasks.filter(task => task.status !== 'finished').map(task => (
                         <TaskRow isEdit={projectmanlist.some(project => project._id === projectId)} 
                             key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="all" />
                     ))}
                 </div>
             ))
-            )}
+            )}</div>
 
 
+            <h2 class="taskH">Мои задачи</h2>
+            <div class="Task">
 
-            {userTask.length > 0 && <h2> Мои задачи</h2> && (
+            {userTask.length > 0 && (
+                
                 Object.entries(tasksByProjectId).map(([projectId, projectData]) => (
                     <div key={projectId}>
                         <h2>Проект ID: {projectId} Название: {projectData.projectTitle} </h2>
-                    {userTask.map(task => (
-                        <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="my" />
-                    ))}
+                        {projectData.tasks.filter(task => task.assignedTo === user.user.login).filter(task => task.status !== 'finished')
+                            .map(task => (
+                                <TaskRow  isEdit={projectmanlist.some(project => project.projectId === projectId)}  key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="my" />
+                                ))}
                 </div>
-            ))
-            )}
+                
+                ))
+                )}        
+            </div>
 
 
             {finishedTask.length > 0 && (
                 <>
-                    <h2>Завершенные задачи</h2>
+                    <h2 class="taskH">Завершенные задачи</h2>
+                    <div class="Task">
+
                     {finishedTask.map(task => (
-                        <TaskRow key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="finished" />
+                        <TaskRow 
+                            key={task.id} task={task} onTaskUpdate={handleTaskUpdate} type="finished" />
                     ))}
+                    </div>
                 </>
             )}
-
-            
-
         </div>
     );
 };

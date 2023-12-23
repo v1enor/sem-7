@@ -89,6 +89,11 @@
     height: auto;
 }
 
+#btnproj {
+    display: flex;
+}
+
 #ProjectContent div {
     margin: 2px ;
+
 }
