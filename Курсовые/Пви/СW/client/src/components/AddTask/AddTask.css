@@ -2,14 +2,30 @@
     display: flex;
     justify-content: center; /* Aligns items horizontally at the center */
     align-items: center; /* Aligns items vertically at the center */
+    height: 100%;
 }
 
 #task input {
     width: 100%;
-    margin-right: 1rem;
+    height: 100%;
+    padding: 0;
+    padding: 0 2%;
+    box-sizing: border-box;
 }
 
 #task p {
     min-width: 60px;
     margin-left:30px ;
+    height: 100%;
+}
+
+#task select {
+    height: 100%;
+    border: 2px solid black;
+    padding: 7px;
+    margin:0px 20px;
+}
+
+#task button {
+    height: 100%;
 }

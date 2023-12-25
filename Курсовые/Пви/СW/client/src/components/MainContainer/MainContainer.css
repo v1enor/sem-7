@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px;
+    gap: 14px;
     flex: 1 0 0;
     align-self: stretch;
 }
@@ -12,5 +12,5 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-auto-rows: minmax(20px, auto);
-    gap: 1px;
+    
 }

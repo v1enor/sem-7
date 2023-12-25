@@ -72,7 +72,7 @@ const Input = ({ event }) => {
                 </div>
             </div>
             <div className='div-event-part'>
-                <div>
+                <div className='dateevent'>
                     <label htmlFor="start">Начало:</label>
                     <input 
                     id="start" 
@@ -80,7 +80,7 @@ const Input = ({ event }) => {
                     defaultValue={userTime} 
                     onChange={(event) => handleChange(event, 'startTime')} />
                 </div>
-                <div>
+                <div className='dateevent'>
                     <label htmlFor="end">Конец:</label>
                     <input 
                     id="end" 
@@ -88,7 +88,7 @@ const Input = ({ event }) => {
                     defaultValue={userTimeEnd} 
                     onChange={(event) => handleChange(event, 'endTime')} />
                 </div>
-                {/* <div>
+                {/* <div className='dateevent'>
                     <label htmlFor="date">Дата:</label>
                     <input id="date" type="date" value={date} onChange={(event) => handleChange(event, 'startTime')} />
                 </div> */}
