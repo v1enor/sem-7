@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import MainPage from './components/Pages/MainPage';
 import RegisterPage from './components/Pages/RegisterPage';
 import LoginPage from './components/Pages/LoginPag';
@@ -10,7 +10,6 @@ import TaskPage from './components/Pages/TaskPage';
 import StatPage from './components/Pages/StatPage';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-
 function App() {
   return (
     <BrowserRouter>
@@ -28,50 +27,37 @@ function App() {
     </BrowserRouter>
   );
 }
-
 function RouteWrapper({ children, allowedRoles }) {
-  const [isLoading, setIsLoading] = useState(true);
-  
+  const [isLoading, setIsLoading] = useState(true); 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
     checkAuthentication(allowedRoles).then((Authenticated) => {
       setIsAuthenticated(Authenticated);
-      setIsLoading(false);
-
-    });
-  
+      setIsLoading(false);});
   }, []);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  
   console.log(isAuthenticated);
   if (!isAuthenticated) {
     return <Navigate to="/signin" />;
-  }
-
-  return children;
+  } return children;
 }
-
+const API_URL = process.env.REACT_APP_SERVER_URL;
 async function checkAuthentication(rols) {
   const token = localStorage.getItem('authToken');
   if (!token) return false;
-
   try {
-    const response = await fetch('http://localhost:3001/api/check-token', {
+    const response = await fetch(`${API_URL}/api/check-token`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
-
     if (response.status !== 200) {
       console.log('Token verification failed');
       return false;
     }
-
     const data = await response.json();
-
     if (data.roles && data.roles.some(val => rols.includes(val))) {
       return data.isValid;
     } else {
@@ -82,5 +68,4 @@ async function checkAuthentication(rols) {
     return false;
   }
 }
-
 export default App;

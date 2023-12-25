@@ -6,11 +6,18 @@
     gap: 14px;
     flex: 1 0 0;
     align-self: stretch;
+    max-height: 50px;
 }
 
+<<<<<<< HEAD
 .calendar{
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-auto-rows: minmax(20px, auto);
     
+=======
+.top-menu
+{    
+    height: 15%;
+>>>>>>> 09661f69918a2b1eba2e836358c1659eef01b175
 }

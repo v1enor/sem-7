@@ -1,6 +1,8 @@
 input {
     border: 2px solid #000;
+    box-sizing: border-box;
     padding: 7px;
+
     background: #FFF;
     margin-right: 5px;
     outline: none; /* Remove the default outline */ 
@@ -28,7 +30,7 @@ input:focus {
 #usersivents{
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
 }
 
@@ -39,10 +41,17 @@ button {
     display: inline-flex;
     padding: 2px 20px;
     background: #FFF;
+<<<<<<< HEAD
     margin: 2px;
     box-sizing: border-box;
     margin: 0px;
         height: 38px;
+=======
+   
+    box-sizing: border-box;
+    margin: 0px 2px;
+    /* height: 38px; */
+>>>>>>> 09661f69918a2b1eba2e836358c1659eef01b175
 }
 
 button:hover {

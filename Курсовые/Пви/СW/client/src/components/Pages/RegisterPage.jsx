@@ -3,11 +3,19 @@ import "./styles/RegisterPage.css";
 import { RegisterUser } from "../../services/apiUser";
 import Alert from '../../components/Alert/Alert';
 
+
 const RegisterPage = () => {
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleTogglePassword = () => {
+      setShowPassword(!showPassword);
+    };
+
 
     const handleLogin = () => {
         const user = {
@@ -63,13 +71,18 @@ const RegisterPage = () => {
             <label>
                 Пароль:
                 <input id='password-input'
-                    type="password"
+                    type={!showPassword ? "password" : "text"} // показать пароль
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    minLength={6}
+                   
                 />
+                 <span onClick={handleTogglePassword}>
+                    {showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                </span>
             </label>
 
-            <button onClick={handleLogin}>Регистрация</button>
+            <button onClick={handleLogin}  disabled={!login || !email || !password }>Регистрация</button>
             <a href="/signin">Есть аккаунт?</a>
         </div>
     );

@@ -6,8 +6,13 @@
 }
 
 #task input {
+<<<<<<< HEAD
     width: 100%;
     height: 100%;
+=======
+   
+    height: stretch;
+>>>>>>> 09661f69918a2b1eba2e836358c1659eef01b175
     padding: 0;
     padding: 0 2%;
     box-sizing: border-box;
@@ -20,12 +25,28 @@
 }
 
 #task select {
+<<<<<<< HEAD
     height: 100%;
     border: 2px solid black;
     padding: 7px;
     margin:0px 20px;
+=======
+  
+    border: 2px solid black;
+    padding: 7px;
+    margin:0px 20px;
+    height: inherit;
+>>>>>>> 09661f69918a2b1eba2e836358c1659eef01b175
 }
 
 #task button {
     height: 100%;
 }
+<<<<<<< HEAD
+=======
+
+#timer {
+    margin: 0;
+    padding: 0 0 0 25px;
+}
+>>>>>>> 09661f69918a2b1eba2e836358c1659eef01b175

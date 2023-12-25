@@ -3,7 +3,7 @@ import TopMenu from '../TopMenu/TopMenu';
 import EventsByDay from '../EventsByDay/EventsByDay';
 import './MainContainer.css';
 import { getEvents } from '../../services/apiEvents'
-
+import AddTask from '../AddTask/AddTask';
 
 const MainContainer = () => {
 
@@ -34,8 +34,8 @@ const MainContainer = () => {
 
     return (
         <div className='mainContainer'>
-            <TopMenu />
-            <EventsByDay events={events} />
+            <AddTask setEvents={setEvents} />
+            <EventsByDay events={events} setEvents={setEvents}/>
 
         </div>
 

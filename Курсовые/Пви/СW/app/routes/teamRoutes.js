@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 const User = require('../models/userModel.js');
-const Team = require('../models/teamModel.js');
+const Team = require("../models/teamModel.js");
 const Manager = require('../models/managerModel.js');
 const jwt = require('jsonwebtoken');
 
@@ -64,7 +63,7 @@ router.post('/add', async (req, res) => {
 
         res.json({ isValid: true, message: 'Team added successfully.' });
     } catch (error) {
-        throw new Error(error.message);
+        res.status(500).json({ message: error.message });
         // Error handling
     }
 });
@@ -76,7 +75,20 @@ router.get('/my', async (req, res) => {
         const teams = await Team.find({ manager: login });
         res.json(teams);
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+router.get('/imember', async (req, res) => {
+    try {
+        const user = await User.findById(req.user);
+        if (!user) throw new Error('User not found.');
+        let log = user.login;
+        const teams = await Team.find({ userlist: log });
+        res.json(teams);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 

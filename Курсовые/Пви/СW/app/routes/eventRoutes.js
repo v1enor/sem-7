@@ -1,17 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 const User   = require('../models/userModel.js');
-const Team   = require('../models/teamModel.js');
-const Manager = require('../models/managerModel.js');
+const Team = require("../models/teamModel.js").default;
 const jwt = require('jsonwebtoken');
-const Task = require('../models/taskModel.js');
 const Project = require('../models/projectModel.js');
 const Event   = require('../models/eventModel.js');
 
 function checkToken(req, res, next) {
     const token = req.headers['authorization'].split(' ')[1];
-
     if (!token) {
         return res.status(401).json({ isValid: false, message: 'No token provided.' });
     }
@@ -20,7 +16,6 @@ function checkToken(req, res, next) {
         if (err) {
             return res.status(500).json({ isValid: false, message: 'Failed to authenticate token.' });
         }
-
 
         req.user = decoded.id;
         req.role = decoded.role;
@@ -61,7 +56,10 @@ router.post('/add', async (req, res) => {
 router.get("/my", async (req, res) => {
     try {
         const events = await Event.find({ userId: req.user });
-        res.status(200).json(events);
+        if (!events) res.status(200);
+        else {
+            res.status(200).json(events);
+        }
     } catch (error) {
         res.status(500).json({error: error.message });
     }
@@ -96,5 +94,31 @@ router.put("/update/:id", async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+router.post("/archive/:id", async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+        if (!event) throw new Error("Нет такого события!");
+        event.status = "archive";
+        await event.save();
+        res.status(200).json("Событие успешно архивировано!");
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+router.post("/active/:id", async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+        if (!event) throw new Error("Нет такого события!");
+        event.status = "active";
+        await event.save();
+        res.status(200).json("Событие успешно перенесено в актульное!");
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 module.exports = router;

@@ -57,7 +57,6 @@ const RegisterPage = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </label>
-
             <button onClick={handleLogin}>Вход</button>
             <a href="/signup">Нет аккаунта?</a>
         </div>

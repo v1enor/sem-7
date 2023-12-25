@@ -72,7 +72,7 @@ export default function CreateProjectForm  ({ updateProjects }) {
 
   return (
     <div>
-      <button onClick={handleCreateProject}>Создать</button>
+      <button onClick={handleCreateProject}>Создать проект</button>
     </div>
   );
 }

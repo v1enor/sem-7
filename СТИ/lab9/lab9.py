@@ -51,8 +51,8 @@ image = cv2.imread("lab9/image2.jpg")
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 # Настройте пороговые значения
-threshold_value = 50
-max_value = 120
+threshold_value = 150
+max_value = 1200
 
 # Примените бинаризацию с настроенными порогами
 _, binary_image = cv2.threshold(gray_image, threshold_value, max_value, cv2.THRESH_BINARY)
@@ -64,12 +64,18 @@ contours, _ = cv2.findContours(binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX
 contour_image = image.copy()
 
 # Нарисуйте прямоугольники, в которые вписаны предметы
+min_area_threshold = 100  # Минимальная площадь объекта
+min_length_threshold = 20  # Минимальная длина объекта
+item_count = 0
 for contour in contours:
-    x, y, w, h = cv2.boundingRect(contour)
-    cv2.rectangle(contour_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    area = cv2.contourArea(contour)
+    if area > min_area_threshold:
+        x, y, w, h = cv2.boundingRect(contour)
+        if w > min_length_threshold and h > min_length_threshold:
+            cv2.rectangle(contour_image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            item_count +=1
+#  Выведите количество предметов
 
-# Выведите количество предметов
-item_count = len(contours)
 print(f"Количество предметов: {item_count}")
 
 # Найдите контур с наибольшей длиной
