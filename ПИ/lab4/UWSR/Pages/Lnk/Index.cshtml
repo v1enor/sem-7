@@ -1,0 +1,92 @@
+﻿@page
+@model UWSR.Pages.Lnk.IndexModel
+@using UWSR.Utils
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div style="display:flex;align-items: center;">
+    <h1 style="margin: 0 10px;">Index</h1>
+    @if (Security.CheckIsAdmin(this.HttpContext))
+    {
+        <form method="post">
+            <button type="submit" asp-page-handler="Reset">Reset</button>
+        </form>
+        <form method="post">
+            <button type="submit" asp-page-handler="Create">Create</button>
+        </form>
+    }
+    <form method="post">
+        <button type="submit" asp-page-handler="Find">Find</button>
+    </form>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        @* <th> *@
+        @*     @Html.DisplayNameFor(model => model.Link[0].Url) *@
+        @* </th> *@
+        <th>
+            @Html.DisplayNameFor(model => model.Link[0].Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Link[0].Minus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Link[0].Plus)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Link)
+    {
+        <div style="display:flex;flex:1">
+            <tr>
+                @* <td> *@
+                @*     <a href="@item.Url"> *@
+                @*     @Html.DisplayFor(modelItem => item.Url) *@
+                @*     </a> *@
+                @* </td> *@
+                <td>
+                    <a href="@item.Url">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </a>
+                </td>
+                <td>
+                    <dd>
+                        <form method="post">
+                            @Html.DisplayFor(modelItem => item.Minus)
+                            <button type="submit" asp-page-handler="OnMinus" asp-route-id="@item.Id">Dislike</button>
+                        </form>
+                    </dd>
+                </td>
+                <td>
+                    <dt>
+                        <form method="post">
+                            @Html.DisplayFor(modelItem => item.Plus)
+                            <button type="submit" asp-page-handler="OnPlus" asp-route-id="@item.Id">Like</button>
+                        </form>
+                    </dt>
+                </td>
+                <td>
+                    @if (Security.CheckIsAdmin(this.HttpContext))
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                        ;
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        ;
+                    }
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        </div>
+    }
+    </tbody>
+</table>
+<script>
+    
+</script>

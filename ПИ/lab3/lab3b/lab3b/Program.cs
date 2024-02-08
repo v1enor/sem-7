@@ -76,6 +76,7 @@ using (var scope= app.Services.CreateScope())
     {   
         if (await userManager.FindByEmailAsync(user.Email)==null)
         {
+            // —оздание нового пользовател€
             var newUser = new IdentityUser();
             newUser.Email = user.Email;
             newUser.UserName = user.Email;
@@ -84,7 +85,8 @@ using (var scope= app.Services.CreateScope())
             var result = await userManager.CreateAsync(newUser, user.Password);
             if (result.Succeeded)
             {
-                await  userManager.AddToRolesAsync(newUser,user.Roles);
+                // ƒобавление пользовател€ к рол€м
+                await userManager.AddToRolesAsync(newUser,user.Roles);
             }
             else
             {
@@ -95,6 +97,7 @@ using (var scope= app.Services.CreateScope())
         }
         else
         {
+          // ќбновление парол€ дл€ существующего пользовател€
           var curUser=await  userManager.FindByEmailAsync(user.Email);
           var token = await userManager.GeneratePasswordResetTokenAsync(curUser);
           var result = await userManager.ResetPasswordAsync(curUser, token, user.Password);
